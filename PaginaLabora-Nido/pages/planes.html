@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/favicon.svg" />
+  <title>Elige tu plan · Labora-e</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="planes-body">
+
+  <div class="planes-header">
+    <a href="register.html" class="back-link d-inline-flex mb-4">← Volver al registro</a>
+    <h1>Elige tu plan</h1>
+    <p>Sin sorpresas. Cancela cuando quieras. Cambia de plan en cualquier momento.</p>
+  </div>
+
+  <div class="container-xl px-4 mb-4">
+    <div class="nido-suite-banner nido-suite-banner--planes">
+      <div class="nido-suite-inner">
+        <div class="nido-suite-left">
+          <span class="nido-suite-tag">✨ Próximamente</span>
+          <p class="nido-suite-text">
+            ¿Sabías que con <strong>Nido Suite</strong> podrías tener Labora-e y otras 7 apps más en un solo lugar? Diseñadas para hacerte la vida mucho más fácil.
+          </p>
+        </div>
+        <a href="#" class="nido-suite-btn">Descubrir Nido Suite →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-xl px-4">
+    <div class="row g-4 justify-content-center align-items-stretch">
+
+      <!-- BÁSICO -->
+      <div class="col-md-4">
+        <div class="plan-card" onclick="seleccionarPlan(this, 'basico')" id="card-basico">
+          <div class="selected-indicator">✓</div>
+          <div class="plan-name">Básico</div>
+          <div class="plan-price">Gratis</div>
+          <span class="plan-price-sub">Para siempre</span>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> Hasta 3 usuarios</li>
+            <li><span class="check">✓</span> Calendario básico</li>
+            <li><span class="check">✓</span> Partes de trabajo ilimitados</li>
+            <li class="disabled"><span class="check">✗</span> Informes avanzados</li>
+            <li class="disabled"><span class="check">✗</span> Integración con MantenApp</li>
+          </ul>
+          <button class="plan-select-btn">Elegir Básico</button>
+        </div>
+      </div>
+
+      <!-- EQUIPO -->
+      <div class="col-md-4">
+        <div class="plan-card plan-card--featured" onclick="seleccionarPlan(this, 'equipo')" id="card-equipo">
+          <div class="plan-badge">Más popular</div>
+          <div class="selected-indicator">✓</div>
+          <div class="plan-name">Equipo</div>
+          <div class="plan-price">9€<span class="plan-price-unit"> /usuario</span></div>
+          <span class="plan-price-sub">por mes, facturado mensualmente</span>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> Usuarios ilimitados</li>
+            <li><span class="check">✓</span> Calendario completo</li>
+            <li><span class="check">✓</span> Partes de trabajo ilimitados</li>
+            <li><span class="check">✓</span> Informes avanzados</li>
+            <li><span class="check">✓</span> Integración con MantenApp</li>
+          </ul>
+          <button class="plan-select-btn">Elegir Equipo</button>
+        </div>
+      </div>
+
+      <!-- EMPRESA -->
+      <div class="col-md-4">
+        <div class="plan-card" onclick="seleccionarPlan(this, 'empresa')" id="card-empresa">
+          <div class="selected-indicator">✓</div>
+          <div class="plan-name">Empresa</div>
+          <div class="plan-price">4€<span class="plan-price-unit"> / 5 trabajadores</span></div>
+          <span class="plan-price-sub">por mes</span>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> Todo lo del plan Equipo</li>
+            <li><span class="check">✓</span> Soporte prioritario</li>
+            <li><span class="check">✓</span> Formación incluida</li>
+            <li><span class="check">✓</span> Integración personalizada</li>
+            <li><span class="check">✓</span> Facturación anual con descuento</li>
+          </ul>
+          <button class="plan-select-btn">Elegir Empresa</button>
+          <div class="plan-workers-wrap d-none" id="plan-workers-wrap">
+            <label class="plan-workers-label" for="plan-workers-input">¿Cuántos trabajadores?</label>
+            <input type="number" id="plan-workers-input" class="plan-workers-input" min="1" placeholder="Ej: 10" />
+            <div class="plan-workers-preview" id="plan-workers-preview"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="planes-footer">
+    <button class="btn-continuar" id="btn-continuar" onclick="confirmarPlan()">
+      Continuar con este plan →
+    </button>
+    <p class="planes-note">Selecciona un plan para continuar</p>
+  </div>
+
+  <script>
+    let planSeleccionado = null;
+
+    function seleccionarPlan(card, plan) {
+      document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      planSeleccionado = plan;
+
+      const nombres = { basico: 'Básico', equipo: 'Equipo', empresa: 'Empresa' };
+
+      // Show workers input only for empresa
+      const wrap = document.getElementById('plan-workers-wrap');
+      if (wrap) {
+        if (plan === 'empresa') {
+          wrap.classList.remove('d-none');
+        } else {
+          wrap.classList.add('d-none');
+        }
+      }
+
+      const btn = document.getElementById('btn-continuar');
+      btn.classList.add('active');
+      btn.textContent = `Continuar con el plan ${nombres[plan]} →`;
+      document.querySelector('.planes-note').textContent = `Plan seleccionado: ${nombres[plan]}`;
+    }
+
+    function calcularPrecioEmpresa(workers) {
+      return Math.ceil(workers / 5) * 4;
+    }
+
+    function confirmarPlan() {
+      if (!planSeleccionado) return;
+
+      if (planSeleccionado === 'empresa') {
+        const input = document.getElementById('plan-workers-input');
+        const workers = parseInt(input ? input.value : 0);
+        if (!workers || workers < 1) {
+          const wrap = document.getElementById('plan-workers-wrap');
+          if (wrap) wrap.classList.remove('d-none');
+          if (input) { input.focus(); input.style.borderColor = '#ef4444'; }
+          return;
+        }
+        localStorage.setItem('user_workers', workers);
+        localStorage.setItem('user_empresa_precio', calcularPrecioEmpresa(workers));
+      }
+
+      localStorage.setItem('user_plan', planSeleccionado);
+      localStorage.setItem('user_loggedin', 'true');
+      window.location.href = '../index.html';
+    }
+
+    // Live price preview
+    document.addEventListener('DOMContentLoaded', () => {
+      const input   = document.getElementById('plan-workers-input');
+      const preview = document.getElementById('plan-workers-preview');
+      if (input && preview) {
+        input.addEventListener('input', () => {
+          const w = parseInt(input.value);
+          if (w && w > 0) {
+            const precio = Math.ceil(w / 5) * 4;
+            preview.textContent = `${w} trabajadores → ${precio}€/mes`;
+            preview.style.display = 'block';
+            input.style.borderColor = '';
+          } else {
+            preview.textContent = '';
+            preview.style.display = 'none';
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a6b7c"/>
+      <stop offset="100%" stop-color="#2ab5a0"/>
+    </linearGradient>
+  </defs>
+  <!-- Fondo redondeado -->
+  <rect width="32" height="32" rx="7" fill="url(#g)"/>
+  <!-- Cuerpo del calendario -->
+  <rect x="5" y="10" width="22" height="17" rx="2" fill="white" opacity="0.95"/>
+  <!-- Cabecera del calendario -->
+  <rect x="5" y="10" width="22" height="6" rx="2" fill="white" opacity="0.25"/>
+  <!-- Anillas -->
+  <rect x="10" y="7" width="2.5" height="6" rx="1.25" fill="white"/>
+  <rect x="19.5" y="7" width="2.5" height="6" rx="1.25" fill="white"/>
+  <!-- Puntos días -->
+  <rect x="8"  y="20" width="4" height="3.5" rx="1" fill="#1a6b7c" opacity="0.65"/>
+  <rect x="14" y="20" width="4" height="3.5" rx="1" fill="#2ab5a0" opacity="0.65"/>
+  <rect x="20" y="20" width="4" height="3.5" rx="1" fill="#1a6b7c" opacity="0.65"/>
+</svg>

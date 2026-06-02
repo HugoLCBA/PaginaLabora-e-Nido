@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/favicon.svg" />
+  <title>Labora-e</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white border-bottom py-0">
+    <div class="container-xl px-4">
+
+      <a class="navbar-brand d-flex align-items-center gap-2 py-3" href="inicio.html">
+        <span class="logo-icon-lg">📅</span>
+        <span class="logo-text">Labora<span class="logo-accent">-e</span></span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto gap-lg-4 py-2 py-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#funcionalidades">Funcionalidades</a></li>
+          <li class="nav-item"><a class="nav-link" href="#como-funciona">Cómo funciona</a></li>
+          <li class="nav-item"><a class="nav-link" href="#precios">Precios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+          <li class="nav-item"><a class="nav-link nav-link-descarga" href="#descarga">📲 Descarga</a></li>
+        </ul>
+        <div class="d-flex gap-2 py-2 py-lg-0 align-items-center" id="nav-actions">
+          <!-- Se rellena por JS según sesión -->
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero-section" id="inicio">
+    <div class="container-xl px-4">
+      <div class="row align-items-center g-5">
+
+        <!-- Columna izquierda: texto -->
+        <div class="col-lg-6">
+          <span class="badge-nido mb-3 d-inline-block">Ecosistema Nido · Próximamente</span>
+          <h1 class="hero-title mb-4">Gestiona tu jornada laboral sin complicaciones.</h1>
+          <p class="hero-subtitle mb-5">Labora-e es la herramienta de Nido para llevar tu calendario laboral, partes de trabajo y comunicaciones del equipo en un solo lugar.</p>
+          <div class="d-flex gap-3 flex-wrap">
+            <a href="pages/register.html" class="btn btn-teal btn-xl">Empieza gratis</a>
+            <a href="#como-funciona" class="btn btn-outline-teal btn-xl">Ver cómo funciona</a>
+          </div>
+          <div class="hero-suite-hint">
+            <span>Parte de</span>
+            <a href="#" class="hero-suite-link">✨ Nido Suite</a>
+            <span>— 8 apps en un solo lugar</span>
+          </div>
+        </div>
+
+        <!-- Columna derecha: calendario + fichaje -->
+        <div class="col-lg-6">
+          <div class="hero-mockups">
+
+            <!-- Calendario -->
+            <div class="mockup-card mockup-card--sm">
+              <div class="mockup-bar">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="mockup-body">
+                <div class="cal-header-row">
+                  <span class="cal-month-label" id="cal-month-label">Mayo 2026</span>
+                  <div class="cal-nav-btns">
+                    <button id="cal-prev">‹</button>
+                    <button id="cal-next">›</button>
+                  </div>
+                </div>
+                <div class="cal-grid" id="cal-grid"></div>
+                <div class="mockup-events mt-2">
+                  <div class="mockup-event mockup-event--blue">
+                    <span class="event-time">09:00</span>
+                    <span class="event-name">Reunión de equipo</span>
+                  </div>
+                  <div class="mockup-event mockup-event--green">
+                    <span class="event-time">11:30</span>
+                    <span class="event-name">Parte de trabajo #42</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fichaje -->
+            <div class="fichaje-card">
+              <div class="fichaje-display" id="fichaje-display">
+                <div class="fichaje-idle">
+                  <div class="fichaje-idle-icon">⏱</div>
+                  <p class="fichaje-idle-text">Pulsa para<br>empezar a fichar</p>
+                </div>
+              </div>
+              <div class="fichaje-timer" id="fichaje-timer" style="display:none">
+                <div class="fichaje-time" id="fichaje-time">00:00:00</div>
+                <div class="fichaje-total-label">Total acumulado hoy:</div>
+                <div class="fichaje-progress-wrap">
+                  <div class="fichaje-progress-bar">
+                    <div class="fichaje-progress-fill" id="fichaje-progress-fill"></div>
+                  </div>
+                  <div class="fichaje-progress-labels">
+                    <span class="fichaje-percent" id="fichaje-percent">0%</span>
+                    <span class="fichaje-meta">Meta: 8h</span>
+                  </div>
+                </div>
+              </div>
+              <button class="fichaje-btn" id="fichaje-btn" onclick="toggleFichaje()">
+                <span id="fichaje-btn-icon">▶</span>
+              </button>
+              <div class="fichaje-status" id="fichaje-status">Inactivo</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ALERTA LEGAL ========== -->
+  <section class="alerta-legal" id="alerta-legal">
+    <div class="alerta-legal__inner">
+
+      <!-- Cabecera de impacto -->
+      <div class="alerta-legal__header">
+        <span class="alerta-badge">⚠️ AVISO LEGAL</span>
+        <h2 class="alerta-title">¿Todavía fichas<br>en papel?</h2>
+        <p class="alerta-subtitle">La normativa española obliga a todas las empresas a registrar la jornada laboral digitalmente. El incumplimiento tiene consecuencias graves.</p>
+      </div>
+
+      <!-- Dato central de impacto -->
+      <div class="alerta-cifra-wrap">
+        <div class="alerta-cifra-card">
+          <div class="alerta-cifra-label">Multa de hasta</div>
+          <div class="alerta-cifra">6.250€</div>
+          <div class="alerta-cifra-sub">por trabajador</div>
+        </div>
+      </div>
+
+      <!-- Tres problemas -->
+      <div class="alerta-problemas">
+
+        <div class="alerta-problema-card">
+          <div class="alerta-problema-icon">📄</div>
+          <div class="alerta-problema-tag">NO VÁLIDO</div>
+          <h3>El papel ya no cumple la ley</h3>
+          <p>El registro manual en papel no es aceptado por la Inspección de Trabajo desde la entrada en vigor de la normativa de control horario.</p>
+        </div>
+
+        <div class="alerta-problema-card">
+          <div class="alerta-problema-icon">📊</div>
+          <div class="alerta-problema-tag">NO VÁLIDO</div>
+          <h3>Excel tampoco es suficiente</h3>
+          <p>Las hojas de cálculo no garantizan la integridad del registro ni cumplen los requisitos de trazabilidad que exige la normativa.</p>
+        </div>
+
+        <div class="alerta-problema-card">
+          <div class="alerta-problema-icon">⏰</div>
+          <div class="alerta-problema-tag">YA EN VIGOR</div>
+          <h3>La ley ya está activa</h3>
+          <p>Las inspecciones de trabajo están en marcha. Cada día sin un sistema digital válido es un riesgo real para tu empresa.</p>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="alerta-cta">
+        <p class="alerta-cta-text">Labora-e te permite cumplir la normativa desde el primer día, sin complicaciones y desde 0€.</p>
+        <a href="pages/register.html" class="btn-alerta-cta">Empieza gratis y cumple la ley hoy →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== COMPARATIVA ========== -->
+  <section class="comparativa-section" id="comparativa">
+    <div class="container-xl px-4">
+
+      <div class="text-center mb-5">
+        <span class="section-tag">Comparativa</span>
+        <h2 class="section-title mt-3">Labora-e vs la competencia</h2>
+        <p class="section-subtitle mt-2">No todas las soluciones son iguales. Descubre por qué Labora-e es la mejor opción para tu empresa.</p>
+      </div>
+
+      <div class="comparativa-table-wrap">
+        <table class="comparativa-table">
+          <thead>
+            <tr>
+              <th class="comparativa-th-feature">Característica</th>
+              <th class="comparativa-th-bad">📄 Papel / Excel</th>
+              <th class="comparativa-th-mid">📱 Grandes apps</th>
+              <th class="comparativa-th-good">✅ Labora-e</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="comparativa-feature">Registro horario</td>
+              <td class="comparativa-bad">Manual y tedioso</td>
+              <td class="comparativa-mid">Automatizado</td>
+              <td class="comparativa-good">Automatizado</td>
+            </tr>
+            <tr>
+              <td class="comparativa-feature">Coste</td>
+              <td class="comparativa-bad">Riesgo de multa</td>
+              <td class="comparativa-mid">Caro</td>
+              <td class="comparativa-good">Desde 0€</td>
+            </tr>
+            <tr>
+              <td class="comparativa-feature">Informes</td>
+              <td class="comparativa-bad">Sin informes</td>
+              <td class="comparativa-mid">Complejo</td>
+              <td class="comparativa-good">Claros y exportables</td>
+            </tr>
+            <tr>
+              <td class="comparativa-feature">Cumplimiento legal</td>
+              <td class="comparativa-bad">Riesgo legal</td>
+              <td class="comparativa-mid">Parcial</td>
+              <td class="comparativa-good">Garantizado</td>
+            </tr>
+            <tr>
+              <td class="comparativa-feature">Adaptado a pymes</td>
+              <td class="comparativa-bad">No</td>
+              <td class="comparativa-mid">Exceso de funciones</td>
+              <td class="comparativa-good">Diseñado para pymes</td>
+            </tr>
+            <tr>
+              <td class="comparativa-feature">Facilidad de uso</td>
+              <td class="comparativa-bad">Lento y propenso a errores</td>
+              <td class="comparativa-mid">Curva de aprendizaje alta</td>
+              <td class="comparativa-good">Simple desde el primer día</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-center mt-5">
+        <a href="pages/register.html" class="btn btn-teal btn-xl">Empieza gratis hoy →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== FUNCIONALIDADES ========== -->
+  <section class="py-section bg-white" id="funcionalidades">
+    <div class="container-xl px-4">
+      <div class="text-center mb-5">
+        <span class="section-tag">Funcionalidades</span>
+        <h2 class="section-title mt-3">Todo lo que necesitas en un solo sitio</h2>
+        <p class="section-subtitle mt-2">Diseñado para equipos que quieren organizarse sin perder tiempo.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-xl-4">
+          <div class="feature-card h-100">
+            <div class="feature-icon">📆</div>
+            <h3>Calendario laboral</h3>
+            <p>Visualiza turnos, eventos y tareas de todo el equipo. Vista diaria, semanal y mensual.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="feature-card h-100">
+            <div class="feature-icon">📋</div>
+            <h3>Partes de trabajo</h3>
+            <p>Registra y gestiona los partes diarios de actividad de cada compañero de forma rápida.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="feature-card h-100">
+            <div class="feature-icon">💬</div>
+            <h3>Comunicaciones</h3>
+            <p>Centraliza los avisos, recordatorios y mensajes del equipo sin salir de la aplicación.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="feature-card h-100">
+            <div class="feature-icon">🔗</div>
+            <h3>Integrado con Nido</h3>
+            <p>Conectado con MantenApp y el resto del ecosistema. Tus activos y tu equipo, sincronizados.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="feature-card h-100">
+            <div class="feature-icon">📊</div>
+            <h3>Informes y estadísticas</h3>
+            <p>Consulta el rendimiento del equipo y las horas trabajadas con informes exportables.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="feature-card h-100">
+            <div class="feature-icon">🌐</div>
+            <h3>Acceso desde cualquier lugar</h3>
+            <p>Funciona desde el navegador sin instalaciones. Disponible en español.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CÓMO FUNCIONA ========== -->
+  <section class="py-section bg-teal-soft" id="como-funciona">
+    <div class="container-xl px-4">
+      <div class="text-center mb-5">
+        <span class="section-tag">Cómo funciona</span>
+        <h2 class="section-title mt-3">En marcha en tres pasos</h2>
+      </div>
+      <div class="row justify-content-center align-items-start g-4">
+        <div class="col-md-3 text-center">
+          <div class="step-number">01</div>
+          <h3 class="step-title">Crea tu cuenta</h3>
+          <p class="step-text">Regístrate con tu email y configura tu empresa en menos de 2 minutos. Sin tarjeta de crédito.</p>
+        </div>
+        <div class="col-md-1 d-none d-md-flex align-items-center justify-content-center step-connector-wrap">
+          <div class="step-connector"></div>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="step-number">02</div>
+          <h3 class="step-title">Añade a tu equipo</h3>
+          <p class="step-text">Invita a tus compañeros y asigna roles. Cada uno tendrá acceso a su propio calendario y partes.</p>
+        </div>
+        <div class="col-md-1 d-none d-md-flex align-items-center justify-content-center step-connector-wrap">
+          <div class="step-connector"></div>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="step-number">03</div>
+          <h3 class="step-title">Empieza a trabajar</h3>
+          <p class="step-text">Crea eventos, rellena partes de trabajo y mantén a todo el equipo coordinado desde el primer día.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRECIOS ========== -->
+  <section class="py-section bg-white" id="precios">
+    <div class="container-xl px-4">
+      <div class="text-center mb-5">
+        <span class="section-tag">Precios</span>
+        <h2 class="section-title mt-3">Simple y transparente</h2>
+        <p class="section-subtitle mt-2">Sin sorpresas. Cancela cuando quieras.</p>
+        <div class="nido-suite-hint mt-3">
+          <span>✨ Próximamente esta y muchas apps más en</span>
+          <a href="#" class="nido-suite-hint-link">Nido Suite →</a>
+        </div>
+      </div>
+      <div class="row justify-content-center align-items-stretch g-4">
+        <div class="col-md-4 col-lg-3">
+          <div class="pricing-card h-100 d-flex flex-column">
+            <h3>Básico</h3>
+            <div class="price-amount">Gratis</div>
+            <ul class="pricing-features flex-grow-1">
+              <li>✓ Hasta 3 usuarios</li>
+              <li>✓ Calendario básico</li>
+              <li>✓ Partes de trabajo ilimitados</li>
+              <li class="disabled">✗ Informes avanzados</li>
+              <li class="disabled">✗ Integración con MantenApp</li>
+            </ul>
+            <button class="btn w-100 mt-3" id="btn-plan-basico" onclick="elegirPlan('basico')">Empezar gratis</button>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+          <div class="pricing-card pricing-card--featured h-100 d-flex flex-column">
+            <div class="pricing-badge">Más popular</div>
+            <h3>Equipo</h3>
+            <div class="price-amount">9€<span class="price-period"> / usuario / mes</span></div>
+            <ul class="pricing-features flex-grow-1">
+              <li>✓ Usuarios ilimitados</li>
+              <li>✓ Calendario completo</li>
+              <li>✓ Partes de trabajo ilimitados</li>
+              <li>✓ Informes avanzados</li>
+              <li>✓ Integración con MantenApp</li>
+            </ul>
+            <button class="btn w-100 mt-3" id="btn-plan-equipo" onclick="elegirPlan('equipo')">Empezar ahora</button>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+          <div class="pricing-card h-100 d-flex flex-column">
+            <h3>Empresa</h3>
+            <div class="price-amount" id="empresa-price-display">4€<span class="price-period"> / 5 trabajadores / mes</span></div>
+            <ul class="pricing-features flex-grow-1">
+              <li>✓ Todo lo del plan Equipo</li>
+              <li>✓ Soporte prioritario</li>
+              <li>✓ Formación incluida</li>
+              <li>✓ Integración personalizada</li>
+              <li>✓ Facturación anual con descuento</li>
+            </ul>
+            <button class="btn w-100 mt-3" id="btn-plan-empresa" onclick="elegirPlan('empresa')">Contactar</button>
+            <!-- Input trabajadores: solo visible cuando el usuario está logueado y puede actualizar -->
+            <div class="empresa-workers-wrap d-none" id="empresa-workers-wrap">
+              <label class="empresa-workers-label" for="empresa-workers-input">¿Cuántos trabajadores tiene tu empresa?</label>
+              <input type="number" id="empresa-workers-input" class="empresa-workers-input" min="1" placeholder="Ej: 10" />
+              <div class="empresa-workers-preview" id="empresa-workers-preview"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACTO ========== -->
+  <section class="py-section bg-teal-soft" id="contacto">
+    <div class="container-xl px-4">
+      <div class="row g-5 align-items-start">
+        <div class="col-lg-5">
+          <span class="section-tag">Contacto</span>
+          <h2 class="section-title mt-3">¿Tienes alguna pregunta?</h2>
+          <p class="section-subtitle mt-3">Escríbenos y te respondemos en menos de 24 horas. También puedes visitar el resto del ecosistema Nido.</p>
+          <div class="d-flex flex-column gap-3 mt-4">
+            <a href="https://manten.app" class="contact-link">🌐 manten.app</a>
+            <a href="mailto:info@nidodeideas.es" class="contact-link">✉️ info@nidodeideas.es</a>
+          </div>
+          <!-- Redes sociales -->
+          <div class="social-icons-contacto mt-4">
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/company/nido-i-d-i/" target="_blank" rel="noopener noreferrer" class="social-icon-btn social-icon-btn--linkedin" title="LinkedIn">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/nidodeideas.es/#" target="_blank" rel="noopener noreferrer" class="social-icon-btn social-icon-btn--instagram" title="Instagram">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+              </svg>
+            </a>
+            <!-- Facebook -->
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn social-icon-btn--facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.887v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <form action="pages/enviado.html" method="GET">
+            <div class="mb-4">
+              <label class="form-label-custom" for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" class="form-control-custom" placeholder="Tu nombre" />
+            </div>
+            <div class="mb-4">
+              <label class="form-label-custom" for="email">Correo electrónico</label>
+              <input type="email" id="email" name="email" class="form-control-custom" placeholder="tu@email.com" />
+            </div>
+            <div class="mb-4">
+              <label class="form-label-custom" for="mensaje">Mensaje</label>
+              <textarea id="mensaje" name="mensaje" class="form-control-custom" rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-teal btn-xl w-100">Enviar mensaje</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DESCARGA ========== -->
+  <section class="descarga-section" id="descarga">
+    <div class="container-xl px-4">
+      <div class="descarga-inner">
+
+        <div class="descarga-text">
+          <h2 class="descarga-title">En 5 minutos tu empresa<br>puede empezar a fichar.</h2>
+          <p class="descarga-sub">Disponible para iOS y Android. Gratis para siempre en el plan básico.</p>
+        </div>
+
+        <div class="descarga-btns">
+          <a class="btn-store btn-store--apple btn-store--disabled" title="Próximamente en App Store">
+            <span class="btn-store__icon">🍎</span>
+            <div class="btn-store__text">
+              <span class="btn-store__label">Próximamente en</span>
+              <span class="btn-store__name">App Store</span>
+            </div>
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.nido.laborae" class="btn-store btn-store--google" target="_blank" rel="noopener noreferrer">
+            <span class="btn-store__icon">▶</span>
+            <div class="btn-store__text">
+              <span class="btn-store__label">Disponible en</span>
+              <span class="btn-store__name">Google Play</span>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container-xl px-4">
+      <div class="row g-5 mb-5">
+         <div class="col-lg-4">
+          <span class="logo-text">Labora<span class="logo-accent">-e</span></span>
+          <p class="footer-desc mt-3">
+            Parte del ecosistema <strong>Nido I+D+i</strong><br/>
+            Tecnología para el bien común
+          </p>
+          <a href="https://nidodeideas.es" target="_blank" rel="noopener noreferrer">
+            <img src="imagenes/nido-logo.png" alt="Nido I+D+i" class="footer-nido-logo" />
+          </a>
+          <div class="footer-social-row">
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/company/nido-i-d-i/" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-link--linkedin" title="LinkedIn">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/nidodeideas.es/#" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-link--instagram" title="Instagram">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+            <!-- Facebook -->
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-link--facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.887v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            </a>
+            <!-- Email -->
+            <a href="mailto:info@nidodeideas.es" class="footer-social-link footer-social-link--email" title="info@nidodeideas.es">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4C2.897 4 2 4.897 2 6v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2-8 5-8-5h16zm0 12H4V8.868l8 5 8-5V18z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="row g-4">
+            <div class="col-6 col-md-4">
+              <h4 class="footer-heading">Producto</h4>
+              <div class="d-flex flex-column gap-2">
+                <a href="#funcionalidades" class="footer-link">Funcionalidades</a>
+                <a href="#precios" class="footer-link">Precios</a>
+                <a href="#como-funciona" class="footer-link">Cómo funciona</a>
+              </div>
+            </div>
+            <div class="col-6 col-md-4">
+              <h4 class="footer-heading">Ecosistema Nido</h4>
+              <div class="d-flex flex-column gap-2">
+                <a href="#" class="footer-link">MantenApp</a>
+                <a href="#" class="footer-link">QR Activos</a>
+                <a href="#" class="footer-link">Mis Partes</a>
+                <a href="#" class="footer-link">ECO ID</a>
+              </div>
+            </div>
+            <div class="col-6 col-md-4">
+              <h4 class="footer-heading">Legal</h4>
+              <div class="d-flex flex-column gap-2">
+                <a href="#" class="footer-link">Política de privacidad</a>
+                <a href="#" class="footer-link">Términos de uso</a>
+                <a href="#" class="footer-link">Cookies</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Nido I+D+i · Todos los derechos reservados</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOTÓN WHATSAPP FLOTANTE -->
+  <a href="https://wa.me/34600000000?text=Hola%2C%20me%20interesa%20Labora-e"
+     class="whatsapp-float"
+     target="_blank"
+     rel="noopener noreferrer"
+     title="Contáctanos por WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.858L.057 23.25a.75.75 0 00.916.99l5.453-1.43A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.726 9.726 0 01-4.951-1.355l-.355-.212-3.68.965.982-3.585-.232-.369A9.724 9.724 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+    </svg>
+  </a>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="calendario.js"></script>
+  <script>
+    // ── SESIÓN ──────────────────────────────────────────
+    const loggedin = localStorage.getItem('user_loggedin') === 'true';
+    const nombre   = localStorage.getItem('user_nombre') || 'Usuario';
+    const email    = localStorage.getItem('user_email')  || '';
+    const plan     = localStorage.getItem('user_plan')   || null;
+    const planLabels = { basico: 'Plan Básico', equipo: 'Plan Equipo', empresa: 'Plan Empresa' };
+
+    // ── TEMA ────────────────────────────────────────────
+    const temaGuardado = localStorage.getItem('user_tema') || 'light';
+    if (temaGuardado === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+
+
+    const inicial  = nombre.charAt(0).toUpperCase();
+
+    // ── NAVBAR ──────────────────────────────────────────
+    const navActions = document.getElementById('nav-actions');
+    if (loggedin) {
+      navActions.innerHTML = `
+        <div class="profile-trigger" id="profileTrigger" onclick="togglePerfil()">
+          <div class="profile-avatar">${inicial}</div>
+          <span class="profile-name d-none d-lg-inline">${nombre.split(' ')[0]}</span>
+        </div>
+      `;
+    } else {
+      navActions.innerHTML = `
+        <a href="pages/login.html" class="btn btn-outline-teal">Iniciar sesión</a>
+        <a href="pages/register.html" class="btn btn-teal">Crear cuenta</a>
+      `;
+    }
+
+    // ── DROPDOWN PERFIL ─────────────────────────────────
+    function togglePerfil() {
+      let panel = document.getElementById('perfil-panel');
+      if (panel) { panel.remove(); return; }
+
+      panel = document.createElement('div');
+      panel.id = 'perfil-panel';
+      panel.className = 'perfil-panel';
+      const planLabel  = planLabels[plan] || 'Sin plan';
+      panel.innerHTML = `
+        <div class="perfil-panel__top">
+          <div class="perfil-panel__email">${email}</div>
+          <button class="perfil-panel__close" id="perfil-close-btn">✕</button>
+        </div>
+        <div class="perfil-panel__avatar">${inicial}</div>
+        <div class="perfil-panel__name">¡Hola, ${nombre.split(' ')[0]}!</div>
+        <div class="perfil-panel__plan">${planLabel}</div>
+        <div class="perfil-panel__divider"></div>
+        <div class="perfil-panel__menu">
+          <button class="perfil-menu-item" id="btn-ajustes">
+            ⚙️ <span>Ajustes</span> <span class="perfil-menu-arrow">›</span>
+          </button>
+          <a class="perfil-menu-item" href="pages/calendario.html">
+            📅 <span>Calendario</span> <span class="perfil-menu-arrow">›</span>
+          </a>
+          <button class="perfil-menu-item" id="btn-cerrar-sesion">
+            🚪 <span>Cerrar sesión</span> <span class="perfil-menu-arrow">›</span>
+          </button>
+        </div>
+        <div class="perfil-panel__footer">
+          Política de Privacidad · Aviso Legal<br/>
+          <strong>Nido I+D+i</strong> · Tecnología para el bien común
+        </div>
+      `;
+      document.body.appendChild(panel);
+      document.getElementById('perfil-close-btn').addEventListener('click', () => panel.remove());
+      document.getElementById('btn-ajustes').addEventListener('click', mostrarAjustes);
+      document.getElementById('btn-cerrar-sesion').addEventListener('click', cerrarSesion);
+      setTimeout(() => panel.classList.add('visible'), 10);
+    }
+
+    function cerrarSesion() {
+      localStorage.removeItem('user_loggedin');
+      window.location.reload();
+    }
+
+    // ── MODAL AJUSTES ───────────────────────────────────
+    function mostrarAjustes() {
+      document.getElementById('perfil-panel')?.remove();
+      const modal = document.createElement('div');
+      modal.id = 'ajustes-modal';
+      modal.className = 'ajustes-overlay';
+      modal.innerHTML = `
+        <div class="ajustes-box">
+          <div class="ajustes-header">
+            <h3>Ajustes de cuenta</h3>
+            <button id="ajustes-close-btn">✕</button>
+          </div>
+          <div class="ajustes-body">
+            <div class="ajustes-field">
+              <label>Nombre</label>
+              <input type="text" id="aj-nombre" value="${nombre}" />
+            </div>
+            <div class="ajustes-field">
+              <label>Correo electrónico</label>
+              <input type="email" id="aj-email" value="${email}" />
+            </div>
+            <div class="ajustes-field">
+              <label>Tema</label>
+              <select id="aj-tema">
+                <option value="light">Claro</option>
+                <option value="dark">Oscuro</option>
+              </select>
+            </div>
+            <div class="ajustes-field">
+              <label>Plan actual</label>
+              <div class="ajustes-plan-badge">${planLabels[plan] || 'Sin plan'}</div>
+              ${plan === 'empresa' ? `
+              <div class="ajustes-empresa-info" id="ajustes-empresa-info">
+                ${localStorage.getItem('user_workers')
+                  ? `<span class="ajustes-empresa-detail">
+                      👥 ${localStorage.getItem('user_workers')} trabajadores
+                      · <strong>${localStorage.getItem('user_empresa_precio')}€/mes</strong>
+                    </span>`
+                  : '<span class="ajustes-empresa-detail">Sin trabajadores configurados</span>'
+                }
+              </div>` : ''}
+            </div>
+          </div>
+          <div class="ajustes-footer">
+            <button class="btn btn-outline-teal" id="ajustes-cancel-btn">Cancelar</button>
+            <button class="btn btn-teal" id="ajustes-save-btn">Guardar cambios</button>
+          </div>
+        </div>
+      `;
+      modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+      document.body.appendChild(modal);
+      document.getElementById('ajustes-close-btn').addEventListener('click', () => modal.remove());
+      document.getElementById('ajustes-cancel-btn').addEventListener('click', () => modal.remove());
+      document.getElementById('ajustes-save-btn').addEventListener('click', guardarAjustes);
+      // Pre-select current values
+      document.getElementById('aj-tema').value   = localStorage.getItem('user_tema')   || 'light';
+    }
+
+    function guardarAjustes() {
+      const nuevoNombre = document.getElementById('aj-nombre').value.trim();
+      const nuevoEmail  = document.getElementById('aj-email').value.trim();
+      const nuevoTema   = document.getElementById('aj-tema').value;
+      if (nuevoNombre) localStorage.setItem('user_nombre', nuevoNombre);
+      if (nuevoEmail)  localStorage.setItem('user_email', nuevoEmail);
+      localStorage.setItem('user_tema', nuevoTema);
+      document.getElementById('ajustes-modal').remove();
+      window.location.reload();
+    }
+
+    // ── PLANES ──────────────────────────────────────────
+    const planOrder = { basico: 0, equipo: 1, empresa: 2 };
+    const userPlanLevel = plan ? planOrder[plan] : -1;
+
+    function elegirPlan(targetPlan) {
+      if (!loggedin) {
+        window.location.href = 'pages/register.html';
+        return;
+      }
+      if (targetPlan === 'empresa') {
+        const input = document.getElementById('empresa-workers-input');
+        const workers = parseInt(input ? input.value : 0);
+        if (!workers || workers < 1) {
+          // Show the input if hidden
+          const wrap = document.getElementById('empresa-workers-wrap');
+          if (wrap) wrap.classList.remove('d-none');
+          if (input) input.focus();
+          return;
+        }
+        localStorage.setItem('user_workers', workers);
+        const precio = calcularPrecioEmpresa(workers);
+        localStorage.setItem('user_empresa_precio', precio);
+      }
+      localStorage.setItem('user_plan', targetPlan);
+      alert('¡Plan actualizado a ' + (targetPlan === 'empresa' ? 'Empresa' : targetPlan) + '!');
+      window.location.reload();
+    }
+
+    function calcularPrecioEmpresa(workers) {
+      // 4€ por cada 5 trabajadores (redondeado hacia arriba)
+      const grupos = Math.ceil(workers / 5);
+      return grupos * 4;
+    }
+
+    function actualizarBotonesPlan() {
+      const btns = {
+        basico:  { el: document.getElementById('btn-plan-basico'),  level: 0 },
+        equipo:  { el: document.getElementById('btn-plan-equipo'),   level: 1 },
+        empresa: { el: document.getElementById('btn-plan-empresa'),  level: 2 },
+      };
+
+      const labels = {
+        basico:  'Empezar gratis',
+        equipo:  'Empezar ahora',
+        empresa: 'Contactar',
+      };
+
+      Object.entries(btns).forEach(([key, { el, level }]) => {
+        if (!el) return;
+        if (!loggedin) {
+          el.className = key === 'equipo'
+            ? 'btn btn-white w-100 mt-3'
+            : 'btn btn-outline-teal w-100 mt-3';
+          el.textContent = labels[key];
+          el.disabled = false;
+          el.style.opacity = '1';
+          el.style.cursor = 'pointer';
+          return;
+        }
+        if (level === userPlanLevel) {
+          el.className = 'btn btn-teal w-100 mt-3';
+          el.textContent = '✓ Tu plan actual';
+          el.disabled = true;
+          el.style.opacity = '0.75';
+          el.style.cursor = 'default';
+        } else if (level < userPlanLevel) {
+          el.className = 'btn btn-outline-teal w-100 mt-3';
+          el.textContent = 'Cambiar a ' + key.charAt(0).toUpperCase() + key.slice(1);
+          el.disabled = false;
+          el.style.opacity = '1';
+          el.style.cursor = 'pointer';
+        } else {
+          el.className = key === 'equipo'
+            ? 'btn btn-white w-100 mt-3'
+            : 'btn btn-outline-teal w-100 mt-3';
+          el.textContent = 'Actualizar a ' + key.charAt(0).toUpperCase() + key.slice(1);
+          el.disabled = false;
+          el.style.opacity = '1';
+          el.style.cursor = 'pointer';
+          // Show workers input for empresa
+          if (key === 'empresa') {
+            const wrap = document.getElementById('empresa-workers-wrap');
+            if (wrap) wrap.classList.remove('d-none');
+          }
+        }
+      });
+    }
+
+    actualizarBotonesPlan();
+
+    // Live price preview for empresa workers input
+    const workersInput = document.getElementById('empresa-workers-input');
+    const workersPreview = document.getElementById('empresa-workers-preview');
+    if (workersInput && workersPreview) {
+      workersInput.addEventListener('input', () => {
+        const w = parseInt(workersInput.value);
+        if (w && w > 0) {
+          const precio = calcularPrecioEmpresa(w);
+          workersPreview.textContent = `${w} trabajadores → ${precio}€/mes`;
+          workersPreview.style.display = 'block';
+        } else {
+          workersPreview.textContent = '';
+          workersPreview.style.display = 'none';
+        }
+      });
+    }
+
+    // Cierra el panel si se hace clic fuera
+    document.addEventListener('click', e => {
+      const panel = document.getElementById('perfil-panel');
+      if (panel && !panel.contains(e.target) && !document.getElementById('profileTrigger')?.contains(e.target)) {
+        panel.remove();
+      }
+    });
+  </script>
+  <!-- BOTÓN WHATSAPP FLOTANTE -->
+  <a href="https://wa.me/34600000000?text=Hola%2C%20me%20interesa%20Labora-e"
+     class="whatsapp-float"
+     target="_blank"
+     rel="noopener noreferrer"
+     title="Contáctanos por WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.858L.057 23.25a.75.75 0 00.916.99l5.453-1.43A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.726 9.726 0 01-4.951-1.355l-.355-.212-3.68.965.982-3.585-.232-.369A9.724 9.724 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+    </svg>
+  </a>
+
+
+  <script src="fichaje.js"></script>
+
+</body>
+</html>

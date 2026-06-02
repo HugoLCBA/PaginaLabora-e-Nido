@@ -1,0 +1,105 @@
+# Labora-e · Página web
+
+Página web de presentación y acceso a **Labora-e**, una aplicación del ecosistema **Nido I+D+i** orientada a la gestión de jornadas laborales, partes de trabajo y comunicación de equipos.
+
+Desarrollada como proyecto de prácticas de 1.º de DAW.
+
+---
+
+## Tecnologías utilizadas
+
+- **HTML5** — estructura de todas las páginas
+- **CSS3** — estilos personalizados con variables CSS
+- **Bootstrap 5.3** — sistema de grid, componentes y utilidades
+- **JavaScript** — lógica de sesión, calendario, tema oscuro y ajustes
+- **Google Fonts** — tipografías DM Sans y DM Serif Display
+- **localStorage** — almacenamiento de sesión y eventos del calendario
+
+---
+
+## Estructura del proyecto
+
+```
+PaginaLabora-Nido/
+│
+├── index.html              ← Página principal (landing page)
+├── inicio.html             ← Página de bienvenida
+├── favicon.svg             ← Icono de la pestaña del navegador
+├── calendario.js           ← Lógica del mini-calendario y del calendario completo
+│
+├── css/
+│   └── style.css           ← Todos los estilos personalizados
+│
+└── pages/
+    ├── login.html          ← Iniciar sesión
+    ├── register.html       ← Crear cuenta
+    ├── planes.html         ← Selección de plan
+    ├── calendario.html     ← Calendario completo con eventos
+    ├── enviado.html        ← Confirmación de mensaje enviado
+    └── 404.html            ← Página de error
+```
+
+---
+
+## Funcionalidades implementadas
+
+### Página principal (`index.html`)
+- Navbar con navegación entre secciones
+- Hero con mini-calendario interactivo
+- Sección de funcionalidades, pasos y precios
+- Formulario de contacto
+- Footer con enlaces del ecosistema Nido
+- Tema oscuro (guardado en localStorage)
+
+### Sesión simulada
+- Registro con nombre, email y contraseña
+- Selección de plan (Básico, Equipo o Empresa)
+- Inicio de sesión
+- Panel de perfil con avatar, plan activo y opciones
+- Modal de ajustes (nombre, email, tema)
+- Cierre de sesión
+
+### Planes y precios
+- Tres planes disponibles: Básico, Equipo y Empresa
+- Al estar registrado, el plan actual aparece marcado
+- Se puede cambiar de plan desde la landing page
+
+### Calendario (`pages/calendario.html`)
+- Vista mensual con grid fijo de 6 filas × 7 columnas
+- Días del mes anterior y siguiente visibles como relleno
+- Días pasados bloqueados para crear eventos (solo lectura)
+- Restricción de navegación: mínimo Mayo 2026, máximo Diciembre 2028
+- Panel lateral con eventos del día seleccionado
+- Panel de eventos del mes con opción "Mostrar más"
+- Sección "Hoy" siempre visible
+- Creación, edición y eliminación de eventos
+- Colores personalizados por evento
+- Eventos guardados en localStorage
+- Eventos de demo precargados
+
+---
+
+## Cómo abrir el proyecto
+
+1. Abrir la carpeta del proyecto en **Visual Studio Code**
+2. Instalar la extensión **Live Server** (si no está instalada)
+3. Hacer clic derecho sobre `inicio.html` → **Open with Live Server**
+4. El navegador abrirá la página en `http://127.0.0.1:5500/inicio.html`
+
+> No es necesario instalar nada más. El proyecto no tiene dependencias externas más allá de las cargadas desde CDN.
+
+---
+
+## Notas de desarrollo
+
+- La sesión es **simulada** mediante `localStorage`. No hay backend ni base de datos real.
+- Los eventos del calendario se guardan localmente en el navegador. Si se borra el localStorage, se restauran los eventos de demo al recargar.
+- El tema oscuro se aplica mediante el atributo `data-theme="dark"` en el elemento `<html>`.
+- Bootstrap se usa para el sistema de grid y componentes base. Los estilos visuales propios están íntegramente en `css/style.css`.
+
+---
+
+## Autor
+
+Proyecto desarrollado durante las prácticas de empresa en **Nido I+D+i**  
+1.º DAW · Mayo 2026

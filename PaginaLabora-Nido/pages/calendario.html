@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/favicon.svg" />  
+  <title>Calendario · Labora-e</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb-nav" aria-label="breadcrumb">
+    <div class="container-xl px-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Calendario</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white border-bottom py-0">
+    <div class="container-xl px-4">
+      <a class="navbar-brand d-flex align-items-center gap-2 py-3" href="../inicio.html">
+        <span class="logo-icon-lg">📅</span>
+        <span class="logo-text">Labora<span class="logo-accent">-e</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto gap-lg-4 py-2 py-lg-0">
+          <li class="nav-item"><a class="nav-link" href="../index.html#funcionalidades">Funcionalidades</a></li>
+          <li class="nav-item"><a class="nav-link" href="../index.html#como-funciona">Cómo funciona</a></li>
+          <li class="nav-item"><a class="nav-link" href="../index.html#precios">Precios</a></li>
+          <li class="nav-item"><a class="nav-link" href="../index.html#contacto">Contacto</a></li>
+        </ul>
+        <div class="d-flex gap-2 py-2 py-lg-0 align-items-center" id="nav-actions"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CALENDARIO -->
+  <section class="calendario-section">
+    <div class="cal-page-layout">
+
+      <!-- ── COLUMNA IZQUIERDA: panel del mes ── -->
+      <aside class="cal-aside-month">
+
+        <!-- Hoy -->
+        <div class="cal-today-card" id="today-section">
+          <div class="today-header"><span class="today-dot"></span><span>Cargando...</span></div>
+        </div>
+
+        <!-- Eventos del mes -->
+        <div class="cal-month-card">
+          <div class="cal-month-card-header">
+            <h4 id="month-panel-title">Eventos del mes</h4>
+            <button class="btn-reset-demo" id="btn-reset-demo" title="Restaurar eventos de demo">↺ Demo</button>
+          </div>
+          <div class="month-events-list" id="month-events-list"></div>
+          <button class="btn-show-more" id="btn-show-more" style="display:none">Mostrar más</button>
+        </div>
+
+      </aside>
+
+      <!-- ── COLUMNA CENTRAL: grid del calendario ── -->
+      <main class="cal-main-col">
+        <div class="calendario-wrapper">
+          <div class="calendario-header">
+            <h2 class="calendario-month-title" id="cal-month-title">Mayo 2026</h2>
+            <div class="calendario-nav">
+              <button class="btn btn-outline-teal btn-sm" id="btn-prev-month">‹</button>
+              <button class="btn btn-outline-teal btn-sm" id="btn-next-month">›</button>
+            </div>
+          </div>
+          <div class="cal-weekday-header">
+            <div>Lun</div>
+            <div>Mar</div>
+            <div>Mié</div>
+            <div>Jue</div>
+            <div>Vie</div>
+            <div class="weekend">Sáb</div>
+            <div class="weekend">Dom</div>
+          </div>
+          <div class="calendario-grid-full" id="cal-grid-full"></div>
+        </div>
+      </main>
+
+      <!-- ── COLUMNA DERECHA: panel del día ── -->
+      <aside class="cal-aside-day">
+        <div class="events-panel">
+          <div class="events-panel-header">
+            <h3 id="selected-date-title">Selecciona un día</h3>
+            <button class="btn btn-teal w-100 mt-3" id="btn-add-event" disabled>+ Añadir Evento</button>
+          </div>
+          <div class="events-list" id="events-list">
+            <div class="day-panel-empty">Selecciona un día para ver sus eventos.</div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- MODAL EVENTO -->
+  <div class="modal fade" id="eventModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content custom-modal">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold text-teal-dark" id="eventModalTitle">Añadir Evento</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="eventForm">
+            <input type="hidden" id="event-id" />
+            <div class="mb-3">
+              <label class="form-label-custom" for="event-title">Título</label>
+              <input type="text" id="event-title" class="form-control-custom" required placeholder="Ej: Reunión de equipo" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label-custom" for="event-time">Hora (opcional)</label>
+              <input type="time" id="event-time" class="form-control-custom" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label-custom" for="event-desc">Descripción (opcional)</label>
+              <textarea id="event-desc" class="form-control-custom" rows="3" placeholder="Detalles del evento..."></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label-custom">Color</label>
+              <div class="d-flex gap-2">
+                <input type="radio" class="btn-check" name="event-color" id="color-teal"   value="teal"   checked autocomplete="off">
+                <label class="color-swatch swatch-teal"   for="color-teal"></label>
+                <input type="radio" class="btn-check" name="event-color" id="color-blue"   value="blue"   autocomplete="off">
+                <label class="color-swatch swatch-blue"   for="color-blue"></label>
+                <input type="radio" class="btn-check" name="event-color" id="color-green"  value="green"  autocomplete="off">
+                <label class="color-swatch swatch-green"  for="color-green"></label>
+                <input type="radio" class="btn-check" name="event-color" id="color-orange" value="orange" autocomplete="off">
+                <label class="color-swatch swatch-orange" for="color-orange"></label>
+                <input type="radio" class="btn-check" name="event-color" id="color-purple" value="purple" autocomplete="off">
+                <label class="color-swatch swatch-purple" for="color-purple"></label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-outline-teal" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-teal" id="btn-save-event">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Sesión y navbar (igual que en index.html)
+    const loggedin   = localStorage.getItem('user_loggedin') === 'true';
+    const nombre     = localStorage.getItem('user_nombre') || 'Usuario';
+    const email      = localStorage.getItem('user_email')  || '';
+    const plan       = localStorage.getItem('user_plan')   || null;
+    const planLabels = { basico: 'Plan Básico', equipo: 'Plan Equipo', empresa: 'Plan Empresa' };
+    const inicial    = nombre.charAt(0).toUpperCase();
+
+    const tema = localStorage.getItem('user_tema') || 'light';
+    if (tema === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+
+    if (!loggedin) window.location.href = 'login.html';
+
+    const navActions = document.getElementById('nav-actions');
+    if (loggedin) {
+      navActions.innerHTML = `
+        <div class="profile-trigger" id="profileTrigger" onclick="togglePerfil()">
+          <div class="profile-avatar">${inicial}</div>
+          <span class="profile-name d-none d-lg-inline">${nombre.split(' ')[0]}</span>
+        </div>`;
+    }
+
+    function togglePerfil() {
+      let panel = document.getElementById('perfil-panel');
+      if (panel) { panel.remove(); return; }
+      panel = document.createElement('div');
+      panel.id = 'perfil-panel';
+      panel.className = 'perfil-panel';
+      const planLabel = planLabels[plan] || 'Sin plan';
+      panel.innerHTML = `
+        <div class="perfil-panel__top">
+          <div class="perfil-panel__email">${email}</div>
+          <button class="perfil-panel__close" id="perfil-close-btn">✕</button>
+        </div>
+        <div class="perfil-panel__avatar">${inicial}</div>
+        <div class="perfil-panel__name">¡Hola, ${nombre.split(' ')[0]}!</div>
+        <div class="perfil-panel__plan">${planLabel}</div>
+        <div class="perfil-panel__divider"></div>
+        <div class="perfil-panel__menu">
+          <button class="perfil-menu-item" id="btn-ajustes">⚙️ <span>Ajustes</span> <span class="perfil-menu-arrow">›</span></button>
+          <a class="perfil-menu-item" href="calendario.html">📅 <span>Calendario</span> <span class="perfil-menu-arrow">›</span></a>
+          <button class="perfil-menu-item" id="btn-cerrar-sesion">🚪 <span>Cerrar sesión</span> <span class="perfil-menu-arrow">›</span></button>
+        </div>
+        <div class="perfil-panel__footer">
+          Política de Privacidad · Aviso Legal<br/>
+          <strong>Nido I+D+i</strong> · Tecnología para el bien común
+        </div>`;
+      document.body.appendChild(panel);
+      document.getElementById('perfil-close-btn').addEventListener('click', () => panel.remove());
+      document.getElementById('btn-ajustes').addEventListener('click', mostrarAjustes);
+      document.getElementById('btn-cerrar-sesion').addEventListener('click', () => {
+        localStorage.removeItem('user_loggedin');
+        window.location.href = '../index.html';
+      });
+      setTimeout(() => panel.classList.add('visible'), 10);
+    }
+
+    function mostrarAjustes() {
+      document.getElementById('perfil-panel')?.remove();
+      const modal = document.createElement('div');
+      modal.id = 'ajustes-modal';
+      modal.className = 'ajustes-overlay';
+      modal.innerHTML = `
+        <div class="ajustes-box">
+          <div class="ajustes-header">
+            <h3>Ajustes de cuenta</h3>
+            <button id="ajustes-close-btn">✕</button>
+          </div>
+          <div class="ajustes-body">
+            <div class="ajustes-field"><label>Nombre</label><input type="text" id="aj-nombre" value="${nombre}" /></div>
+            <div class="ajustes-field"><label>Correo</label><input type="email" id="aj-email" value="${email}" /></div>
+            <div class="ajustes-field"><label>Tema</label>
+              <select id="aj-tema"><option value="light">Claro</option><option value="dark">Oscuro</option></select>
+            </div>
+          </div>
+          <div class="ajustes-footer">
+            <button class="btn btn-outline-teal" id="ajustes-cancel-btn">Cancelar</button>
+            <button class="btn btn-teal" id="ajustes-save-btn">Guardar</button>
+          </div>
+        </div>`;
+      modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+      document.body.appendChild(modal);
+      document.getElementById('ajustes-close-btn').addEventListener('click', () => modal.remove());
+      document.getElementById('ajustes-cancel-btn').addEventListener('click', () => modal.remove());
+      document.getElementById('ajustes-save-btn').addEventListener('click', () => {
+        const n = document.getElementById('aj-nombre').value.trim();
+        const e = document.getElementById('aj-email').value.trim();
+        const t = document.getElementById('aj-tema').value;
+        if (n) localStorage.setItem('user_nombre', n);
+        if (e) localStorage.setItem('user_email', e);
+        localStorage.setItem('user_tema', t);
+        modal.remove();
+        window.location.reload();
+      });
+      document.getElementById('aj-tema').value = localStorage.getItem('user_tema') || 'light';
+    }
+
+    document.addEventListener('click', e => {
+      const panel = document.getElementById('perfil-panel');
+      if (panel && !panel.contains(e.target) && !document.getElementById('profileTrigger')?.contains(e.target)) {
+        panel.remove();
+      }
+    });
+  </script>
+
+  <script src="../calendario.js"></script>
+</body>
+</html>
