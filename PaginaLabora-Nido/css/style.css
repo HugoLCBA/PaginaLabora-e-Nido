@@ -4078,7 +4078,8 @@ background: #EA4335;}
 
 /* Mockup móvil en Funcionalidades */
 .feature-phone-mockup {
-  width: 240px;
+  width: 100%;
+  max-width: 220px;
   border-radius: 36px;
   box-shadow: 0 24px 64px rgba(0,0,0,0.18), 0 0 0 8px #e2e8f0, 0 0 0 10px #cbd5e1;
   overflow: hidden;
