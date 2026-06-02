@@ -2986,7 +2986,7 @@ background: #EA4335;}
    SECCIÓN ALERTA LEGAL
 ============================================= */
 .alerta-legal {
-  background: #2a2a2a;
+  background: #1a3a3a;
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -3199,7 +3199,7 @@ background: #EA4335;}
 
 /* Tema oscuro: la sección ya es oscura, no necesita cambios */
 [data-theme="dark"] .alerta-legal {
-  background: #1e1e1e;
+  background: #122828;
 }
 
 /* Responsive */
