@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="../imagenes/favicon.svg" />
+  <title>Opiniones · Labora-e</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* ── HEADER ── */
+    .opiniones-header {
+      height: 64px;
+      background: white;
+      border-bottom: 1px solid var(--gray-light);
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    [data-theme="dark"] .opiniones-header {
+      background: rgba(17, 24, 39, 0.97);
+      border-color: #374151;
+    }
+    .opiniones-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    /* ── HERO ── */
+    .opiniones-hero {
+      background: linear-gradient(160deg, #f0fafc 0%, #e6f5f7 60%, #f4f8fa 100%);
+      padding: 64px 0 48px;
+      text-align: center;
+    }
+    [data-theme="dark"] .opiniones-hero {
+      background: linear-gradient(160deg, #111827 0%, #1a2535 60%, #111827 100%);
+    }
+    .opiniones-hero__tag {
+      display: inline-block;
+      background: rgba(42, 157, 181, 0.10);
+      color: var(--teal-dark);
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    [data-theme="dark"] .opiniones-hero__tag {
+      background: rgba(78, 197, 212, 0.15);
+      color: #4ec5d4;
+    }
+    .opiniones-hero__title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      color: var(--teal-dark);
+      margin-bottom: 16px;
+    }
+    [data-theme="dark"] .opiniones-hero__title {
+      color: #e5e7eb;
+    }
+    .opiniones-hero__sub {
+      font-size: 1.1rem;
+      color: var(--text-soft);
+      margin-bottom: 32px;
+    }
+
+    /* ── RESUMEN GLOBAL ── */
+    .rating-global {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: white;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius-lg);
+      padding: 16px 32px;
+      box-shadow: var(--shadow);
+    }
+    [data-theme="dark"] .rating-global {
+      background: #1f2937;
+      border-color: #374151;
+    }
+    .rating-global__score {
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      color: var(--teal-dark);
+      line-height: 1;
+    }
+    [data-theme="dark"] .rating-global__score {
+      color: #e5e7eb;
+    }
+    .rating-global__info {
+      text-align: left;
+    }
+    .rating-global__count {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin-top: 4px;
+    }
+
+    /* ── ESTRELLAS ── */
+    .stars {
+      display: inline-flex;
+      gap: 3px;
+    }
+    .star {
+      font-size: 1rem;
+      line-height: 1;
+    }
+    .star--full  { color: #f59e0b; }
+    .star--empty { color: #d1d5db; }
+
+    .stars--lg .star { font-size: 1.4rem; }
+
+    /* ── GRID DE OPINIONES ── */
+    .opiniones-grid {
+      padding: 64px 0 80px;
+      background: white;
+    }
+    [data-theme="dark"] .opiniones-grid {
+      background: #111827;
+    }
+
+    /* ── TARJETA DE OPINIÓN ── */
+    .review-card {
+      background: var(--off-white);
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      height: 100%;
+      transition: box-shadow 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .review-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-3px);
+    }
+    [data-theme="dark"] .review-card {
+      background: #1f2937;
+      border-color: #374151;
+    }
+
+    .review-card__top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .review-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .review-card__info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .review-card__name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    [data-theme="dark"] .review-card__name { color: #e5e7eb; }
+
+    .review-card__role {
+      font-size: 0.82rem;
+      color: var(--text-soft);
+    }
+    [data-theme="dark"] .review-card__role { color: #6b7280; }
+
+    .review-card__stars {
+      margin-bottom: 12px;
+    }
+
+    .review-card__text {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      line-height: 1.7;
+      flex: 1;
+      margin: 0;
+    }
+    [data-theme="dark"] .review-card__text { color: #9ca3af; }
+
+    .review-card__date {
+      font-size: 0.78rem;
+      color: var(--gray);
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--gray-light);
+    }
+    [data-theme="dark"] .review-card__date {
+      border-color: #374151;
+      color: #4b5563;
+    }
+
+    /* ── CTA BOTTOM ── */
+    .opiniones-cta {
+      background: linear-gradient(160deg, #e6f5f7 0%, #f0fafc 100%);
+      padding: 64px 0;
+      text-align: center;
+    }
+    [data-theme="dark"] .opiniones-cta {
+      background: linear-gradient(160deg, #1a2535 0%, #111827 100%);
+    }
+    .opiniones-cta h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      color: var(--teal-dark);
+      margin-bottom: 16px;
+    }
+    [data-theme="dark"] .opiniones-cta h2 { color: #e5e7eb; }
+    .opiniones-cta p {
+      font-size: 1.1rem;
+      color: var(--text-soft);
+      margin-bottom: 32px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="opiniones-header">
+    <div class="container-xl px-4">
+      <div class="opiniones-header__inner">
+        <a href="../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
+          <span style="font-size:1.5rem">📅</span>
+          <span class="logo-text">Labora<span class="logo-accent">-e</span></span>
+        </a>
+        <div class="d-flex align-items-center gap-2">
+          <a href="https://www.linkedin.com/company/nido-i-d-i/" target="_blank" rel="noopener noreferrer" class="nav-social-link nav-social-link--linkedin" title="LinkedIn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/nidodeideas.es/#" target="_blank" rel="noopener noreferrer" class="nav-social-link nav-social-link--instagram" title="Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="nav-social-link nav-social-link--facebook" title="Facebook">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.887v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+          </a>
+          <div id="header-actions" class="d-flex gap-2 ms-2 align-items-center"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <div class="opiniones-hero">
+    <div class="container-xl px-4">
+      <span class="opiniones-hero__tag">Opiniones</span>
+      <h1 class="opiniones-hero__title">Lo que dicen nuestros usuarios</h1>
+      <p class="opiniones-hero__sub">Empresas y autónomos que ya gestionan su jornada con Labora-e</p>
+      <div class="d-flex justify-content-center">
+        <div class="rating-global">
+          <div class="rating-global__score">4.6</div>
+          <div class="rating-global__info">
+            <div class="stars stars--lg">
+              <span class="star star--full">★</span>
+              <span class="star star--full">★</span>
+              <span class="star star--full">★</span>
+              <span class="star star--full">★</span>
+              <span class="star star--full">★</span>
+            </div>
+            <div class="rating-global__count">Basado en 21 valoraciones</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== GRID DE OPINIONES ========== -->
+  <section class="opiniones-grid">
+    <div class="container-xl px-4">
+      <div class="row g-4" id="reviews-container"></div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="opiniones-cta">
+    <div class="container-xl px-4">
+      <h2>¿Quieres ser el próximo?</h2>
+      <p>Únete a los equipos que ya gestionan su jornada de forma legal y sencilla.</p>
+      <a href="register.html" class="btn btn-teal btn-xl">Empieza gratis ahora →</a>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container-xl px-4">
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <span class="logo-text">Labora<span class="logo-accent">-e</span></span>
+          <p class="footer-desc mt-3">
+            Parte del ecosistema <strong>Nido I+D+i</strong><br/>
+            Tecnología para el bien común
+          </p>
+          <a href="https://nidodeideas.es" target="_blank" rel="noopener noreferrer">
+            <img src="../imagenes/nido-logo.png" alt="Nido I+D+i" class="footer-nido-logo" />
+          </a>
+          <div class="footer-social-row">
+            <a href="https://www.linkedin.com/company/nido-i-d-i/" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-link--linkedin" title="LinkedIn">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/nidodeideas.es/#" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-link--instagram" title="Instagram">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-link--facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.887v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            </a>
+            <a href="mailto:info@nidodeideas.es" class="footer-social-link footer-social-link--email" title="info@nidodeideas.es">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4C2.897 4 2 4.897 2 6v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2-8 5-8-5h16zm0 12H4V8.868l8 5 8-5V18z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="row g-4">
+            <div class="col-6 col-md-4">
+              <h4 class="footer-heading">Producto</h4>
+              <div class="d-flex flex-column gap-2">
+                <a href="../index.html#funcionalidades" class="footer-link">Funcionalidades</a>
+                <a href="../index.html#precios" class="footer-link">Precios</a>
+                <a href="../index.html#como-funciona" class="footer-link">Cómo funciona</a>
+                <a href="opiniones.html" class="footer-link">Opiniones</a>
+              </div>
+            </div>
+            <div class="col-6 col-md-4">
+              <h4 class="footer-heading">Ecosistema Nido</h4>
+              <div class="d-flex flex-column gap-2">
+                <a href="https://manten.app" target="_blank" rel="noopener noreferrer" class="footer-link">MantenApp</a>
+                <a href="#" class="footer-link">QR Activos</a>
+                <a href="#" class="footer-link">Mis Partes</a>
+                <a href="#" class="footer-link">ECO ID</a>
+              </div>
+            </div>
+            <div class="col-6 col-md-4">
+              <h4 class="footer-heading">Legal</h4>
+              <div class="d-flex flex-column gap-2">
+                <a href="https://nidodeideas.es/politica-privacidad/" target="_blank" rel="noopener noreferrer" class="footer-link">Política de privacidad</a>
+                <a href="terminos.html" class="footer-link">Términos de uso</a>
+                <a href="https://nidodeideas.es/politica-de-cookies/" target="_blank" rel="noopener noreferrer" class="footer-link">Cookies</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Nido I+D+i · Todos los derechos reservados</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOTÓN WHATSAPP FLOTANTE -->
+  <a href="https://wa.me/34644105081?text=Hola%2C%20me%20interesa%20Labora-e"
+     class="whatsapp-float"
+     target="_blank"
+     rel="noopener noreferrer"
+     title="Contáctanos por WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.858L.057 23.25a.75.75 0 00.916.99l5.453-1.43A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.726 9.726 0 01-4.951-1.355l-.355-.212-3.68.965.982-3.585-.232-.369A9.724 9.724 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+    </svg>
+  </a>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ── TEMA ────────────────────────────────────────────
+    const temaGuardado = localStorage.getItem('user_tema') || 'light';
+    if (temaGuardado === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+
+    // ── SESIÓN ──────────────────────────────────────────
+    const loggedin = localStorage.getItem('user_loggedin') === 'true';
+    const nombre   = localStorage.getItem('user_nombre') || 'Usuario';
+    const inicial  = nombre.charAt(0).toUpperCase();
+    const headerActions = document.getElementById('header-actions');
+
+    if (loggedin) {
+      headerActions.innerHTML = `
+        <div class="profile-trigger" id="profileTrigger" onclick="togglePerfil()">
+          <div class="profile-avatar">${inicial}</div>
+          <span class="profile-name d-none d-sm-inline">${nombre.split(' ')[0]}</span>
+        </div>`;
+    } else {
+      headerActions.innerHTML = `
+        <a href="login.html" class="btn btn-outline-teal btn-sm">Iniciar sesión</a>
+        <a href="register.html" class="btn btn-teal btn-sm">Crear cuenta</a>`;
+    }
+
+    function togglePerfil() {
+      let panel = document.getElementById('perfil-panel');
+      if (panel) { panel.remove(); return; }
+      const email = localStorage.getItem('user_email') || '';
+      const plan  = localStorage.getItem('user_plan') || null;
+      const planLabels = { basico: 'Plan Básico', equipo: 'Plan Equipo', empresa: 'Plan Empresa' };
+      panel = document.createElement('div');
+      panel.id = 'perfil-panel';
+      panel.className = 'perfil-panel';
+      panel.innerHTML = `
+        <div class="perfil-panel__top">
+          <div class="perfil-panel__email">${email}</div>
+          <button class="perfil-panel__close" id="perfil-close-btn">✕</button>
+        </div>
+        <div class="perfil-panel__avatar">${inicial}</div>
+        <div class="perfil-panel__name">¡Hola, ${nombre.split(' ')[0]}!</div>
+        <div class="perfil-panel__plan">${planLabels[plan] || 'Sin plan'}</div>
+        <div class="perfil-panel__divider"></div>
+        <div class="perfil-panel__menu">
+          <a class="perfil-menu-item" href="../index.html">🏠 <span>Inicio</span> <span class="perfil-menu-arrow">›</span></a>
+          <a class="perfil-menu-item" href="calendario.html">📅 <span>Calendario</span> <span class="perfil-menu-arrow">›</span></a>
+          <button class="perfil-menu-item" id="btn-cerrar-sesion">🚪 <span>Cerrar sesión</span> <span class="perfil-menu-arrow">›</span></button>
+        </div>
+        <div class="perfil-panel__footer">
+          Política de Privacidad · Aviso Legal<br/>
+          <strong>Nido I+D+i</strong> · Tecnología para el bien común
+        </div>`;
+      document.body.appendChild(panel);
+      document.getElementById('perfil-close-btn').addEventListener('click', () => panel.remove());
+      document.getElementById('btn-cerrar-sesion').addEventListener('click', () => {
+        localStorage.removeItem('user_loggedin');
+        window.location.reload();
+      });
+      setTimeout(() => panel.classList.add('visible'), 10);
+    }
+
+    document.addEventListener('click', e => {
+      const panel = document.getElementById('perfil-panel');
+      if (panel && !panel.contains(e.target) && !document.getElementById('profileTrigger')?.contains(e.target)) {
+        panel.remove();
+      }
+    });
+
+    // ── DATOS DE OPINIONES ──────────────────────────────
+    const reviews = [
+      { name: 'María García', role: 'Autónoma · Diseño gráfico', rating: 5, color: '#2a9db5', emoji: '👩‍🎨', date: 'Marzo 2026', text: 'Llevaba años usando una hoja de Excel para controlar mis horas. Con Labora-e tardé menos de 10 minutos en configurarlo todo. Ahora tengo todo claro de un vistazo.' },
+      { name: 'Carlos Martínez', role: 'Responsable RRHH · Pyme', rating: 5, color: '#10b981', emoji: '👨‍💼', date: 'Abril 2026', text: 'Gestionamos un equipo de 18 personas y antes era un caos coordinar los turnos. Ahora todo el equipo ficha desde el móvil y yo veo los informes en segundos.' },
+      { name: 'Laura Sánchez', role: 'Gerente · Clínica dental', rating: 4, color: '#8b5cf6', emoji: '👩‍⚕️', date: 'Febrero 2026', text: 'Muy intuitiva y fácil de usar. Lo que más me gusta es que cumple con la normativa sin complicaciones. Le daría 5 estrellas cuando añadan más opciones de informes.' },
+      { name: 'Javier López', role: 'Director · Empresa logística', rating: 5, color: '#f59e0b', emoji: '🚚', date: 'Mayo 2026', text: 'Tenemos conductores que empiezan a horas distintas cada día. Labora-e nos ha simplificado enormemente el control horario. La integración con MantenApp es un plus.' },
+      { name: 'Ana Fernández', role: 'Autónoma · Consultoría', rating: 4, color: '#ec4899', emoji: '👩‍💻', date: 'Enero 2026', text: 'Perfecta para llevar el control de horas por cliente. Antes perdía tiempo con Excel, ahora en dos clics tengo el parte listo. Muy recomendable para autónomos.' },
+      { name: 'Pedro Romero', role: 'Propietario · Taller mecánico', rating: 5, color: '#ef4444', emoji: '🔧', date: 'Abril 2026', text: 'Mis mecánicos fichan desde el móvil sin líos. Antes tenía que rellenar papeles yo mismo al final del día. Ahora me llega todo automático. No volvería atrás.' },
+      { name: 'Sofía Moreno', role: 'Administrativa · Asesoría', rating: 5, color: '#2a9db5', emoji: '📊', date: 'Marzo 2026', text: 'Desde que usamos Labora-e, las revisiones de horas con los empleados son mucho más rápidas. Todo queda registrado y no hay discusiones. Excelente herramienta.' },
+      { name: 'Miguel Torres', role: 'Autónomo · Fotografía', rating: 3, color: '#10b981', emoji: '📷', date: 'Febrero 2026', text: 'Cumple con lo básico y está bien para empezar. Echo de menos alguna funcionalidad más avanzada para gestionar proyectos por cliente, pero para el registro horario va perfecto.' },
+      { name: 'Elena Ruiz', role: 'Coordinadora · Centro educativo', rating: 5, color: '#8b5cf6', emoji: '👩‍🏫', date: 'Mayo 2026', text: 'Tenemos profesores a media jornada, sustituciones... Gestionar todo eso era un dolor de cabeza. Con Labora-e cada docente lleva su propio control y yo superviso desde el panel.' },
+      { name: 'Antonio Díaz', role: 'Jefe de obra · Construcción', rating: 4, color: '#f59e0b', emoji: '🏗️', date: 'Enero 2026', text: 'Usamos Labora-e en obra para que los peones ficharan sin papel. Funciona muy bien con el móvil aunque haya mala cobertura. Los partes de trabajo son muy útiles.' },
+      { name: 'Isabel Jiménez', role: 'Autónoma · Nutricionista', rating: 5, color: '#ec4899', emoji: '🥗', date: 'Abril 2026', text: 'Como autónoma necesitaba algo sencillo y que cumpliera la ley. Labora-e es exactamente eso. En cinco minutos estaba funcionando y ya no me preocupa la inspección.' },
+      { name: 'Roberto Alonso', role: 'Manager · Startup tecnológica', rating: 5, color: '#ef4444', emoji: '💻', date: 'Marzo 2026', text: 'Nuestro equipo es 100% remoto y necesitábamos una forma fiable de registrar la jornada. Labora-e funciona perfectamente desde cualquier dispositivo. Muy recomendable.' },
+      { name: 'Carmen Vega', role: 'Propietaria · Peluquería', rating: 4, color: '#2a9db5', emoji: '✂️', date: 'Febrero 2026', text: 'Soy muy poco tecnológica pero aprendí a usarlo en un día. Mi empleada también lo entiende sin problema. Lo único que mejoraría es la gestión de vacaciones.' },
+      { name: 'Francisco Molina', role: 'Responsable · Supermercado', rating: 5, color: '#10b981', emoji: '🛒', date: 'Mayo 2026', text: 'Con 12 empleados a turnos rotativos, antes los cuadrantes eran un problema semanal. Labora-e lo ha resuelto completamente. El equipo está más contento y yo también.' },
+      { name: 'Natalia Castro', role: 'Autónoma · Marketing digital', rating: 5, color: '#8b5cf6', emoji: '📱', date: 'Enero 2026', text: 'Llevo el control de mis horas por proyecto y cliente con Labora-e. Los informes exportables me han simplificado la facturación mensual. Una herramienta que no sabía que necesitaba.' },
+      { name: 'Sergio Núñez', role: 'Director · Agencia de viajes', rating: 4, color: '#f59e0b', emoji: '✈️', date: 'Abril 2026', text: 'Implantamos Labora-e en toda la agencia después de una inspección de trabajo. Cumple perfectamente con la normativa y el equipo lo adoptó sin resistencia.' },
+      { name: 'Patricia Herrera', role: 'Autónoma · Fisioterapeuta', rating: 5, color: '#ec4899', emoji: '💆‍♀️', date: 'Marzo 2026', text: 'Perfecta para llevar el registro de mis consultas y horas. Antes perdía tiempo con anotaciones manuales. Con Labora-e tengo todo digitalizado y accesible desde el móvil.' },
+      { name: 'Álvaro Reyes', role: 'CEO · Empresa de limpieza', rating: 3, color: '#ef4444', emoji: '🧹', date: 'Febrero 2026', text: 'La aplicación funciona bien y el soporte es rápido. Esperamos que añadan más opciones para gestionar equipos en múltiples ubicaciones. De momento, cumple con lo esencial.' },
+      { name: 'Lucía Medina', role: 'Directora · Residencia de mayores', rating: 5, color: '#2a9db5', emoji: '🏥', date: 'Mayo 2026', text: 'Con turnos de noche, mañana y tarde, gestionar la jornada era complejo. Labora-e nos ha dado claridad y tranquilidad legal. El personal mayor también lo maneja sin dificultad.' },
+      { name: 'Daniel Ortega', role: 'Propietario · Bar restaurante', rating: 4, color: '#10b981', emoji: '🍽️', date: 'Enero 2026', text: 'En hostelería el control horario siempre ha sido complicado. Labora-e lo ha simplificado mucho. Mis camareros fichan desde el móvil y yo controlo todo desde casa.' },
+      { name: 'Raquel Serrano', role: 'Autónoma · Abogada', rating: 5, color: '#8b5cf6', emoji: '⚖️', date: 'Abril 2026', text: 'Como abogada, la normativa de registro horario me preocupaba especialmente. Labora-e cumple con todos los requisitos legales y además es cómoda de usar. Totalmente recomendable.' },
+    ];
+
+    // ── FUNCIÓN DE ESTRELLAS ──────────────────────────
+    function renderStars(rating) {
+      let html = '<div class="stars">';
+      for (let i = 1; i <= 5; i++) {
+        html += `<span class="star ${i <= rating ? 'star--full' : 'star--empty'}">★</span>`;
+      }
+      html += '</div>';
+      return html;
+    }
+
+    // ── RENDER DE TARJETAS ────────────────────────────
+    const container = document.getElementById('reviews-container');
+    reviews.forEach(r => {
+      const col = document.createElement('div');
+      col.className = 'col-md-6 col-lg-4';
+      col.innerHTML = `
+        <div class="review-card">
+          <div class="review-card__top">
+            <div class="review-avatar" style="background:${r.color}">${r.emoji}</div>
+            <div class="review-card__info">
+              <div class="review-card__name">${r.name}</div>
+              <div class="review-card__role">${r.role}</div>
+            </div>
+          </div>
+          <div class="review-card__stars">${renderStars(r.rating)}</div>
+          <p class="review-card__text">"${r.text}"</p>
+          <div class="review-card__date">${r.date}</div>
+        </div>`;
+      container.appendChild(col);
+    });
+  </script>
+
+</body>
+</html>
