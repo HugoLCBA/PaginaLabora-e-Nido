@@ -621,17 +621,7 @@ h1, h2, h3, h4 {
   background: #1877F2; 
 }
 .footer-social-link--email:hover     { 
-background: #EA4335;}
-
-.footer-email-text {
-  color: rgba(255,255,255,0.55);
-  font-size: 0.92rem;
-  text-decoration: none;
-  transition: color 0.2s;
-  margin-left: 4px;
-}
-.footer-email-text:hover { 
-  color: white; 
+background: #EA4335;
 }
 
 .form-label-custom {
@@ -2558,12 +2548,6 @@ background: #EA4335;}
   flex-shrink: 0;
 }
 
-.cal-month-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .cal-month-card-header h4 {
   font-size: 0.88rem;
   font-weight: 700;
@@ -3450,10 +3434,6 @@ background: #EA4335;}
 
   .calendario-grid-full {
     height: 420px;
-  }
-
-.calendario-grid-full {
-    height: 420px;
     gap: 4px;
   }
 
@@ -3536,20 +3516,12 @@ background: #EA4335;}
 }
 
 @media (max-width: 576px) {
-.cal-page-layout {
+  .cal-page-layout {
     padding: 8px 8px 24px;
     gap: 10px;
   }
 
   .calendario-grid-full {
-    height: 300px;
-  }
-
-  .cal-weekday-header div {
-    font-size: 0.7rem;
-  }
-
-.calendario-grid-full {
     height: 340px;
   }
 
@@ -3619,11 +3591,6 @@ background: #EA4335;}
   100% { transform: scale(1);   opacity: 0;   }
 }
 
-.btn-store--disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  pointer-events: none;
-}
 /* =============================================
    MOCKUP CALENDARIO — VERSIÓN PEQUEÑA
 ============================================= */

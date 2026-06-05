@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="../imagenes/favicon.svg" />
+  <title>Términos de uso · Labora-e</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* ── HEADER SIMPLIFICADO ── */
+    .terminos-header {
+      height: 64px;
+      background: white;
+      border-bottom: 1px solid var(--gray-light);
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    [data-theme="dark"] .terminos-header {
+      background: rgba(17, 24, 39, 0.97);
+      border-color: #374151;
+    }
+
+    .terminos-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    /* ── CONTENIDO ── */
+    .terminos-hero {
+      background: linear-gradient(160deg, #f0fafc 0%, #e6f5f7 60%, #f4f8fa 100%);
+      padding: 64px 0 48px;
+      text-align: center;
+    }
+
+    [data-theme="dark"] .terminos-hero {
+      background: linear-gradient(160deg, #111827 0%, #1a2535 60%, #111827 100%);
+    }
+
+    .terminos-hero__tag {
+      display: inline-block;
+      background: rgba(42, 157, 181, 0.10);
+      color: var(--teal-dark);
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    [data-theme="dark"] .terminos-hero__tag {
+      background: rgba(78, 197, 212, 0.15);
+      color: #4ec5d4;
+    }
+
+    .terminos-hero__title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      color: var(--teal-dark);
+      margin-bottom: 16px;
+    }
+
+    [data-theme="dark"] .terminos-hero__title {
+      color: #e5e7eb;
+    }
+
+    .terminos-hero__meta {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+    }
+
+    /* ── CUERPO DEL DOCUMENTO ── */
+    .terminos-body {
+      background: white;
+      padding: 64px 0 80px;
+    }
+
+    [data-theme="dark"] .terminos-body {
+      background: #111827;
+    }
+
+    .terminos-content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .terminos-section {
+      margin-bottom: 48px;
+    }
+
+    .terminos-section h2 {
+      font-family: var(--font);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gray-light);
+    }
+
+    [data-theme="dark"] .terminos-section h2 {
+      color: #4ec5d4;
+      border-color: #374151;
+    }
+
+    .terminos-section p {
+      font-size: 1rem;
+      color: var(--text-soft);
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    [data-theme="dark"] .terminos-section p {
+      color: #9ca3af;
+    }
+
+    .terminos-section ul {
+      padding-left: 20px;
+      margin-bottom: 14px;
+    }
+
+    .terminos-section ul li {
+      font-size: 1rem;
+      color: var(--text-soft);
+      line-height: 1.8;
+      margin-bottom: 6px;
+    }
+
+    [data-theme="dark"] .terminos-section ul li {
+      color: #9ca3af;
+    }
+
+    .terminos-highlight {
+      background: rgba(42, 157, 181, 0.06);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+
+    [data-theme="dark"] .terminos-highlight {
+      background: rgba(42, 157, 181, 0.1);
+    }
+
+    .terminos-highlight p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .terminos-contact-box {
+      background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      text-align: center;
+      margin-top: 64px;
+      color: white;
+    }
+
+    .terminos-contact-box h3 {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+
+    .terminos-contact-box p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 24px;
+      font-size: 1rem;
+    }
+
+    .terminos-contact-box a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      color: var(--teal-dark);
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: opacity 0.2s;
+    }
+
+    .terminos-contact-box a:hover {
+      opacity: 0.9;
+    }
+
+    /* Índice lateral */
+    .terminos-index {
+      position: sticky;
+      top: 80px;
+      background: var(--off-white);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid var(--gray-light);
+    }
+
+    [data-theme="dark"] .terminos-index {
+      background: #1f2937;
+      border-color: #374151;
+    }
+
+    .terminos-index h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
+      font-family: var(--font);
+    }
+
+    [data-theme="dark"] .terminos-index h4 {
+      color: #4ec5d4;
+    }
+
+    .terminos-index a {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      padding: 5px 0;
+      border-left: 2px solid transparent;
+      padding-left: 10px;
+      transition: color 0.2s, border-color 0.2s;
+      line-height: 1.4;
+    }
+
+    [data-theme="dark"] .terminos-index a {
+      color: #6b7280;
+    }
+
+    .terminos-index a:hover {
+      color: var(--teal-dark);
+      border-color: var(--teal);
+    }
+
+    [data-theme="dark"] .terminos-index a:hover {
+      color: #4ec5d4;
+      border-color: #4ec5d4;
+    }
+
+    @media (max-width: 991px) {
+      .terminos-index {
+        position: static;
+        margin-bottom: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER SIMPLIFICADO ========== -->
+  <header class="terminos-header">
+    <div class="container-xl px-4">
+      <div class="terminos-header__inner">
+
+        <!-- Logo -->
+        <a href="../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
+          <span style="font-size:1.5rem">📅</span>
+          <span class="logo-text">Labora<span class="logo-accent">-e</span></span>
+        </a>
+
+        <!-- Acciones: redes + sesión -->
+        <div class="d-flex align-items-center gap-2">
+          <!-- Redes sociales -->
+          <a href="https://www.linkedin.com/company/nido-i-d-i/" target="_blank" rel="noopener noreferrer" class="nav-social-link nav-social-link--linkedin" title="LinkedIn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/nidodeideas.es/#" target="_blank" rel="noopener noreferrer" class="nav-social-link nav-social-link--instagram" title="Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="nav-social-link nav-social-link--facebook" title="Facebook">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.887v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+          </a>
+          <!-- Sesión (se rellena por JS) -->
+          <div id="header-actions" class="d-flex gap-2 ms-2 align-items-center"></div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <div class="terminos-hero">
+    <div class="container-xl px-4">
+      <span class="terminos-hero__tag">Legal</span>
+      <h1 class="terminos-hero__title">Términos de uso</h1>
+      <p class="terminos-hero__meta">Última actualización: junio de 2026 · Versión demo</p>
+    </div>
+  </div>
+
+  <!-- ========== CONTENIDO ========== -->
+  <div class="terminos-body">
+    <div class="container-xl px-4">
+      <div class="row g-5">
+
+        <!-- Índice lateral -->
+        <div class="col-lg-3 order-lg-2">
+          <nav class="terminos-index">
+            <h4>Índice</h4>
+            <a href="#s1">1. Objeto y ámbito</a>
+            <a href="#s2">2. Descripción del servicio</a>
+            <a href="#s3">3. Registro y cuenta</a>
+            <a href="#s4">4. Planes y precios</a>
+            <a href="#s5">5. Uso aceptable</a>
+            <a href="#s6">6. Propiedad intelectual</a>
+            <a href="#s7">7. Protección de datos</a>
+            <a href="#s8">8. Limitación de responsabilidad</a>
+            <a href="#s9">9. Modificaciones</a>
+            <a href="#s10">10. Legislación aplicable</a>
+            <a href="#s11">11. Contacto</a>
+          </nav>
+        </div>
+
+        <!-- Texto -->
+        <div class="col-lg-9 order-lg-1">
+          <div class="terminos-content" style="max-width:100%">
+
+            <div class="terminos-highlight">
+              <p>Este documento establece los términos y condiciones de uso de <strong>Labora-e</strong>, una aplicación web en fase de desarrollo perteneciente al ecosistema <strong>Nido I+D+i</strong>. Al acceder o utilizar el servicio, el usuario acepta estos términos en su totalidad.</p>
+            </div>
+
+            <!-- 1 -->
+            <div class="terminos-section" id="s1">
+              <h2>1. Objeto y ámbito de aplicación</h2>
+              <p>Los presentes Términos de Uso regulan el acceso y la utilización de <strong>Labora-e</strong>, plataforma digital de gestión de jornada laboral, partes de trabajo y comunicaciones de equipo, desarrollada por <strong>Nido I+D+i</strong>, con domicilio en Carrer de Juan de la Cierva y Codorniu, 10, 46980 Paterna, Valencia y sede en C/ L'Agret, 18, Desp. 23, 03700 Dénia, Alicante.</p>
+              <p>Estos términos son aplicables a todos los usuarios que accedan a la plataforma, independientemente del plan contratado.</p>
+            </div>
+
+            <!-- 2 -->
+            <div class="terminos-section" id="s2">
+              <h2>2. Descripción del servicio</h2>
+              <p>Labora-e es una herramienta SaaS (Software as a Service) que permite a autónomos, pequeñas empresas y equipos:</p>
+              <ul>
+                <li>Registrar y gestionar la jornada laboral de forma digital, cumpliendo con la normativa española vigente.</li>
+                <li>Organizar calendarios laborales, turnos, vacaciones y permisos.</li>
+                <li>Crear y consultar partes de trabajo diarios.</li>
+                <li>Centralizar las comunicaciones internas del equipo.</li>
+                <li>Generar informes exportables de actividad y horas trabajadas.</li>
+              </ul>
+              <p>El servicio se encuentra actualmente en <strong>fase de desarrollo y demo</strong>. Algunas funcionalidades pueden estar sujetas a cambios, mejoras o limitaciones temporales sin previo aviso.</p>
+            </div>
+
+            <!-- 3 -->
+            <div class="terminos-section" id="s3">
+              <h2>3. Registro y cuenta de usuario</h2>
+              <p>Para acceder a las funcionalidades de Labora-e es necesario crear una cuenta de usuario. El usuario se compromete a:</p>
+              <ul>
+                <li>Proporcionar información veraz, completa y actualizada durante el registro.</li>
+                <li>Mantener la confidencialidad de sus credenciales de acceso.</li>
+                <li>Notificar a Nido I+D+i de cualquier uso no autorizado de su cuenta.</li>
+                <li>Ser el único responsable de todas las actividades realizadas desde su cuenta.</li>
+              </ul>
+              <p>Nido I+D+i se reserva el derecho de suspender o cancelar cuentas que incumplan estos términos o que se utilicen de forma fraudulenta.</p>
+            </div>
+
+            <!-- 4 -->
+            <div class="terminos-section" id="s4">
+              <h2>4. Planes y condiciones económicas</h2>
+              <p>Labora-e ofrece los siguientes planes de uso:</p>
+              <ul>
+                <li><strong>Plan Básico (gratuito):</strong> Acceso a funcionalidades básicas para hasta 3 usuarios. Sin coste alguno, sin tarjeta de crédito requerida.</li>
+                <li><strong>Plan Equipo:</strong> 9€ por usuario al mes. Acceso completo a todas las funcionalidades, usuarios ilimitados e integración con el ecosistema Nido.</li>
+                <li><strong>Plan Empresa:</strong> Precio calculado en función del número de trabajadores (4€ por cada 5 trabajadores al mes). Incluye soporte prioritario, formación y facturación anual con descuento.</li>
+              </ul>
+              <div class="terminos-highlight">
+                <p>Durante la fase demo, las condiciones económicas pueden variar. Los precios mostrados son orientativos y pueden cambiar antes del lanzamiento oficial del servicio.</p>
+              </div>
+              <p>El usuario puede cambiar o cancelar su plan en cualquier momento desde su panel de cuenta.</p>
+            </div>
+
+            <!-- 5 -->
+            <div class="terminos-section" id="s5">
+              <h2>5. Uso aceptable</h2>
+              <p>El usuario se compromete a utilizar Labora-e de forma lícita y respetuosa. Queda expresamente prohibido:</p>
+              <ul>
+                <li>Usar el servicio para actividades ilegales o que infrinjan derechos de terceros.</li>
+                <li>Intentar acceder sin autorización a sistemas, cuentas o datos de otros usuarios.</li>
+                <li>Realizar ingeniería inversa, descompilar o modificar el software.</li>
+                <li>Introducir virus, malware o cualquier código dañino en la plataforma.</li>
+                <li>Usar el servicio para enviar comunicaciones no solicitadas (spam).</li>
+                <li>Suplantar la identidad de otra persona o entidad.</li>
+              </ul>
+            </div>
+
+            <!-- 6 -->
+            <div class="terminos-section" id="s6">
+              <h2>6. Propiedad intelectual</h2>
+              <p>Todos los derechos de propiedad intelectual sobre Labora-e — incluyendo el software, diseño, logotipos, textos e interfaces — pertenecen a <strong>Nido I+D+i</strong> o a sus licenciantes.</p>
+              <p>El usuario recibe una licencia de uso limitada, no exclusiva e intransferible para utilizar el servicio conforme a estos términos. Esta licencia no implica ninguna cesión de derechos de propiedad intelectual.</p>
+              <p>Los datos introducidos por el usuario en la plataforma son de su exclusiva propiedad. Nido I+D+i no reclamará derechos sobre el contenido generado por los usuarios.</p>
+            </div>
+
+            <!-- 7 -->
+            <div class="terminos-section" id="s7">
+              <h2>7. Protección de datos personales</h2>
+              <p>El tratamiento de los datos personales de los usuarios se rige por la <strong>Política de Privacidad</strong> de Nido I+D+i, disponible en <a href="https://nidodeideas.es/politica-privacidad/" target="_blank" rel="noopener noreferrer" style="color:var(--teal);font-weight:600">nidodeideas.es/politica-privacidad</a>.</p>
+              <p>Nido I+D+i trata los datos conforme al Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica de Protección de Datos (LOPDGDD).</p>
+              <p>Para cualquier consulta relacionada con el tratamiento de datos personales, el usuario puede contactar en: <a href="mailto:info@nidodeideas.es" style="color:var(--teal);font-weight:600">info@nidodeideas.es</a>.</p>
+            </div>
+
+            <!-- 8 -->
+            <div class="terminos-section" id="s8">
+              <h2>8. Limitación de responsabilidad</h2>
+              <p>Dado que Labora-e se encuentra en fase de desarrollo y demo, Nido I+D+i no garantiza la disponibilidad continua, ininterrumpida ni libre de errores del servicio.</p>
+              <p>Nido I+D+i no será responsable de:</p>
+              <ul>
+                <li>Pérdidas de datos derivadas de fallos técnicos durante la fase de pruebas.</li>
+                <li>Daños indirectos, lucro cesante o perjuicios derivados del uso del servicio.</li>
+                <li>Interrupciones del servicio por causas ajenas a su control (fuerza mayor, fallos de terceros, etc.).</li>
+              </ul>
+              <p>El usuario es responsable de mantener copias de seguridad de sus datos durante la fase demo.</p>
+            </div>
+
+            <!-- 9 -->
+            <div class="terminos-section" id="s9">
+              <h2>9. Modificaciones de los términos</h2>
+              <p>Nido I+D+i se reserva el derecho de modificar estos Términos de Uso en cualquier momento. Las modificaciones serán comunicadas a los usuarios registrados mediante correo electrónico o mediante aviso visible en la plataforma.</p>
+              <p>El uso continuado del servicio tras la notificación de cambios implicará la aceptación de los nuevos términos. Si el usuario no acepta los nuevos términos, deberá cesar el uso del servicio.</p>
+            </div>
+
+            <!-- 10 -->
+            <div class="terminos-section" id="s10">
+              <h2>10. Legislación aplicable y jurisdicción</h2>
+              <p>Estos Términos de Uso se rigen por la legislación española. Para la resolución de cualquier controversia derivada de su interpretación o cumplimiento, las partes se someten a los Juzgados y Tribunales de Valencia, con renuncia expresa a cualquier otro fuero que pudiera corresponderles.</p>
+            </div>
+
+            <!-- 11 -->
+            <div class="terminos-section" id="s11">
+              <h2>11. Contacto</h2>
+              <p>Para cualquier consulta relacionada con estos términos, puede contactar con Nido I+D+i a través de:</p>
+              <ul>
+                <li><strong>Email:</strong> info@nidodeideas.es</li>
+                <li><strong>Teléfono:</strong> +34 644 10 50 81</li>
+                <li><strong>Dirección (Valencia):</strong> Carrer de Juan de la Cierva y Codorniu, 10, 46980 Paterna, Valencia</li>
+                <li><strong>Dirección (Alicante):</strong> C/ L'Agret, 18, Desp. 23, 03700 Dénia, Alicante</li>
+              </ul>
+            </div>
+
+            <!-- Caja de contacto -->
+            <div class="terminos-contact-box">
+              <h3>¿Tienes alguna duda?</h3>
+              <p>Nuestro equipo está disponible para resolver cualquier consulta sobre estos términos.</p>
+              <a href="mailto:info@nidodeideas.es">✉️ Escríbenos</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container-xl px-4">
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <span class="logo-text">Labora<span class="logo-accent">-e</span></span>
+          <p class="footer-desc mt-3">
+            Parte del ecosistema <strong>Nido I+D+i</strong><br/>
+            Tecnología para el bien común
+          </p>
+          <a href="https://nidodeideas.es" target="_blank" rel="noopener noreferrer">
+            <img src="../imagenes/nido-logo.png" alt="Nido I+D+i" class="footer-nido-logo" />
+          </a>
+          <div class="footer-social-row">
+            <a href="https://www.linkedin.com/company/nido-i-d-i/" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-link--linkedin" title="LinkedIn">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/nidodeideas.es/#" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-link--instagram" title="Instagram">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="footer-social-link footer-social-link--facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.887v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            </a>
+            <a href="mailto:info@nidodeideas.es" class="footer-social-link footer-social-link--email" title="info@nidodeideas.es">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4C2.897 4 2 4.897 2 6v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2-8 5-8-5h16zm0 12H4V8.868l8 5 8-5V18z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="row g-4">
+            <div class="col-6 col-md-4">
+              <h4 class="footer-heading">Producto</h4>
+              <div class="d-flex flex-column gap-2">
+                <a href="../index.html#funcionalidades" class="footer-link">Funcionalidades</a>
+                <a href="../index.html#precios" class="footer-link">Precios</a>
+                <a href="../index.html#como-funciona" class="footer-link">Cómo funciona</a>
+              </div>
+            </div>
+            <div class="col-6 col-md-4">
+              <h4 class="footer-heading">Ecosistema Nido</h4>
+              <div class="d-flex flex-column gap-2">
+                <a href="https://manten.app" target="_blank" rel="noopener noreferrer" class="footer-link">MantenApp</a>
+                <a href="#" class="footer-link">QR Activos</a>
+                <a href="#" class="footer-link">Mis Partes</a>
+                <a href="#" class="footer-link">ECO ID</a>
+              </div>
+            </div>
+            <div class="col-6 col-md-4">
+              <h4 class="footer-heading">Legal</h4>
+              <div class="d-flex flex-column gap-2">
+                <a href="https://nidodeideas.es/politica-privacidad/" target="_blank" rel="noopener noreferrer" class="footer-link">Política de privacidad</a>
+                <a href="terminos.html" class="footer-link">Términos de uso</a>
+                <a href="https://nidodeideas.es/politica-de-cookies/" target="_blank" rel="noopener noreferrer" class="footer-link">Cookies</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Nido I+D+i · Todos los derechos reservados</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ── TEMA ────────────────────────────────────────────
+    const temaGuardado = localStorage.getItem('user_tema') || 'light';
+    if (temaGuardado === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+
+    // ── SESIÓN ──────────────────────────────────────────
+    const loggedin = localStorage.getItem('user_loggedin') === 'true';
+    const nombre   = localStorage.getItem('user_nombre') || 'Usuario';
+    const inicial  = nombre.charAt(0).toUpperCase();
+    const headerActions = document.getElementById('header-actions');
+
+    if (loggedin) {
+      headerActions.innerHTML = `
+        <div class="profile-trigger" id="profileTrigger" onclick="togglePerfil()">
+          <div class="profile-avatar">${inicial}</div>
+          <span class="profile-name d-none d-sm-inline">${nombre.split(' ')[0]}</span>
+        </div>
+      `;
+    } else {
+      headerActions.innerHTML = `
+        <a href="login.html" class="btn btn-outline-teal btn-sm">Iniciar sesión</a>
+        <a href="register.html" class="btn btn-teal btn-sm">Crear cuenta</a>
+      `;
+    }
+
+    // ── DROPDOWN PERFIL ─────────────────────────────────
+    function togglePerfil() {
+      let panel = document.getElementById('perfil-panel');
+      if (panel) { panel.remove(); return; }
+      const email = localStorage.getItem('user_email') || '';
+      const plan  = localStorage.getItem('user_plan') || null;
+      const planLabels = { basico: 'Plan Básico', equipo: 'Plan Equipo', empresa: 'Plan Empresa' };
+      panel = document.createElement('div');
+      panel.id = 'perfil-panel';
+      panel.className = 'perfil-panel';
+      panel.innerHTML = `
+        <div class="perfil-panel__top">
+          <div class="perfil-panel__email">${email}</div>
+          <button class="perfil-panel__close" id="perfil-close-btn">✕</button>
+        </div>
+        <div class="perfil-panel__avatar">${inicial}</div>
+        <div class="perfil-panel__name">¡Hola, ${nombre.split(' ')[0]}!</div>
+        <div class="perfil-panel__plan">${planLabels[plan] || 'Sin plan'}</div>
+        <div class="perfil-panel__divider"></div>
+        <div class="perfil-panel__menu">
+          <a class="perfil-menu-item" href="../index.html">🏠 <span>Inicio</span> <span class="perfil-menu-arrow">›</span></a>
+          <a class="perfil-menu-item" href="calendario.html">📅 <span>Calendario</span> <span class="perfil-menu-arrow">›</span></a>
+          <button class="perfil-menu-item" id="btn-cerrar-sesion">🚪 <span>Cerrar sesión</span> <span class="perfil-menu-arrow">›</span></button>
+        </div>
+        <div class="perfil-panel__footer">
+          Política de Privacidad · Aviso Legal<br/>
+          <strong>Nido I+D+i</strong> · Tecnología para el bien común
+        </div>
+      `;
+      document.body.appendChild(panel);
+      document.getElementById('perfil-close-btn').addEventListener('click', () => panel.remove());
+      document.getElementById('btn-cerrar-sesion').addEventListener('click', () => {
+        localStorage.removeItem('user_loggedin');
+        window.location.reload();
+      });
+      setTimeout(() => panel.classList.add('visible'), 10);
+    }
+
+    document.addEventListener('click', e => {
+      const panel = document.getElementById('perfil-panel');
+      if (panel && !panel.contains(e.target) && !document.getElementById('profileTrigger')?.contains(e.target)) {
+        panel.remove();
+      }
+    });
+  </script>
+
+</body>
+</html>
