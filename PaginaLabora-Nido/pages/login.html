@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/svg+xml" href="imagenes/favicon.svg" />  
+  <link rel="icon" type="image/svg+xml" href="../imagenes/favicon.svg" /> 
   <title>Iniciar sesión · Labora-e</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -56,7 +56,7 @@
         </div>
 
         <div class="text-end mb-4">
-          <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+          <a href="recuperar.html" class="forgot-link">¿Olvidaste tu contraseña?</a>
         </div>
 
         <button onclick="iniciarSesion()" class="btn btn-teal btn-xl w-100">Iniciar Sesión →</button>
@@ -77,14 +77,29 @@
     }
 
     function iniciarSesion() {
-      const email = document.getElementById('email').value.trim();
-      if (!email) { alert('Introduce tu correo electrónico.'); return; }
-      // Simulamos login: usamos datos guardados o creamos uno de prueba
-      if (!localStorage.getItem('user_nombre')) {
-        localStorage.setItem('user_nombre', 'Usuario');
-        localStorage.setItem('user_email', email);
-        localStorage.setItem('user_plan', 'basico');
+      const email    = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert('Introduce tu correo electrónico y contraseña.');
+        return;
       }
+
+      const savedEmail    = localStorage.getItem('user_email');
+      const savedPassword = localStorage.getItem('user_password');
+
+      // Si no hay cuenta registrada
+      if (!savedEmail || !savedPassword) {
+        alert('No existe ninguna cuenta registrada. Crea una cuenta primero.');
+        return;
+      }
+
+      // Comprobamos email y contraseña
+      if (email !== savedEmail || password !== savedPassword) {
+        alert('El correo electrónico o la contraseña no son correctos.');
+        return;
+      }
+
       localStorage.setItem('user_loggedin', 'true');
       window.location.href = '../index.html';
     }

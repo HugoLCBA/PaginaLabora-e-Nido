@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/svg+xml" href="imagenes/favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="../imagenes/favicon.svg" />
   <title>Crear cuenta · Labora-e</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -91,16 +91,22 @@
     }
 
     function irAPlanes() {
-      const nombre = document.getElementById('nombre').value.trim();
-      const email  = document.getElementById('email').value.trim();
+      const nombre   = document.getElementById('nombre').value.trim();
+      const email    = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
       if (!nombre || !email) {
-        alert('Por favor rellena al menos tu nombre y correo electrónico.');
+        alert('Por favor rellena tu nombre y correo electrónico.');
         return;
       }
-      // Guardamos datos básicos para usarlos en el perfil
-      localStorage.setItem('user_nombre', nombre);
-      localStorage.setItem('user_email', email);
-      localStorage.setItem('user_empresa', document.getElementById('empresa').value.trim());
+      if (password.length < 8) {
+        alert('La contraseña debe tener al menos 8 caracteres.');
+        return;
+      }
+      localStorage.setItem('user_nombre',   nombre);
+      localStorage.setItem('user_email',    email);
+      localStorage.setItem('user_password', password);
+      localStorage.setItem('user_empresa',  document.getElementById('empresa').value.trim());
       window.location.href = 'planes.html';
     }
   </script>

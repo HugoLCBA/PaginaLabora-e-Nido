@@ -463,18 +463,21 @@
           </div>
         </div>
         <div class="col-lg-7">
-          <form action="pages/enviado.html" method="GET">
+          <form id="contacto-form" onsubmit="enviarContacto(event)">
             <div class="mb-4">
               <label class="form-label-custom" for="nombre">Nombre</label>
               <input type="text" id="nombre" name="nombre" class="form-control-custom" placeholder="Tu nombre" />
+              <span class="contacto-error" id="error-nombre"></span>
             </div>
             <div class="mb-4">
               <label class="form-label-custom" for="email">Correo electrónico</label>
               <input type="email" id="email" name="email" class="form-control-custom" placeholder="tu@email.com" />
+              <span class="contacto-error" id="error-email"></span>
             </div>
             <div class="mb-4">
               <label class="form-label-custom" for="mensaje">Mensaje</label>
               <textarea id="mensaje" name="mensaje" class="form-control-custom" rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+              <span class="contacto-error" id="error-mensaje"></span>
             </div>
             <button type="submit" class="btn btn-teal btn-xl w-100">Enviar mensaje</button>
           </form>
@@ -845,6 +848,37 @@
         panel.remove();
       }
     });
+
+    function enviarContacto(e) {
+      e.preventDefault();
+      const nombre  = document.getElementById('nombre');
+      const email   = document.getElementById('email');
+      const mensaje = document.getElementById('mensaje');
+      let valid = true;
+
+      [nombre, email, mensaje].forEach(el => {
+        el.classList.remove('input-error');
+      });
+      document.querySelectorAll('.contacto-error').forEach(el => el.textContent = '');
+
+      if (!nombre.value.trim()) {
+        document.getElementById('error-nombre').textContent = 'Por favor introduce tu nombre.';
+        nombre.classList.add('input-error');
+        valid = false;
+      }
+      if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        document.getElementById('error-email').textContent = 'Introduce un correo electrónico válido.';
+        email.classList.add('input-error');
+        valid = false;
+      }
+      if (!mensaje.value.trim()) {
+        document.getElementById('error-mensaje').textContent = 'Por favor escribe un mensaje.';
+        mensaje.classList.add('input-error');
+        valid = false;
+      }
+      if (valid) window.location.href = 'pages/enviado.html';
+    }
+
   </script>
   <!-- BOTÓN WHATSAPP FLOTANTE -->
   <a href="https://wa.me/34644105081?text=Hola%2C%20me%20interesa%20Labora-e"
