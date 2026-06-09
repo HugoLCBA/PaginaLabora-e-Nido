@@ -107,6 +107,14 @@
   </div>
 
   <script>
+
+    if (localStorage.getItem('user_loggedin') === 'true') {
+      window.location.href = '../index.html';
+    }
+
+    const temaGuardado = localStorage.getItem('user_tema') || 'light';
+    if (temaGuardado === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+
     let planSeleccionado = null;
 
     function seleccionarPlan(card, plan) {
