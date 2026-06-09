@@ -44,6 +44,7 @@
             <span class="auth-input-icon">👤</span>
             <input type="text" id="nombre" placeholder="Tu nombre completo" />
           </div>
+          <span class="recuperar-error" id="error-nombre"></span>
         </div>
 
         <div class="auth-field">
@@ -52,6 +53,7 @@
             <span class="auth-input-icon">✉️</span>
             <input type="email" id="email" placeholder="tu@email.com" />
           </div>
+          <span class="recuperar-error" id="error-email"></span>
         </div>
 
         <div class="auth-field">
@@ -69,6 +71,7 @@
             <input type="password" id="password" placeholder="Mínimo 8 caracteres" />
             <button class="auth-input-toggle" onclick="togglePassword(this)" type="button">👁</button>
           </div>
+          <span class="recuperar-error" id="error-password"></span>
         </div>
 
         <button onclick="irAPlanes()" class="btn btn-teal btn-xl w-100 mt-2">
@@ -84,6 +87,14 @@
   </div>
 
   <script>
+    // Redirigir si ya está logueado
+    if (localStorage.getItem('user_loggedin') === 'true') {
+      window.location.href = '../index.html';
+    }
+
+    const temaGuardado = localStorage.getItem('user_tema') || 'light';
+    if (temaGuardado === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+
     function togglePassword(btn) {
       const input = btn.closest('.auth-input-wrap').querySelector('input');
       input.type = input.type === 'password' ? 'text' : 'password';
@@ -91,18 +102,38 @@
     }
 
     function irAPlanes() {
-      const nombre   = document.getElementById('nombre').value.trim();
-      const email    = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
+      // Limpiar errores previos
+      ['error-nombre','error-email','error-password'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = '';
+      });
+      document.querySelectorAll('.auth-input-wrap').forEach(el => el.classList.remove('input-error'));
 
-      if (!nombre || !email) {
-        alert('Por favor rellena tu nombre y correo electrónico.');
-        return;
+      const nombreInput   = document.getElementById('nombre');
+      const emailInput    = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const nombre        = nombreInput.value.trim();
+      const email         = emailInput.value.trim();
+      const password      = passwordInput.value;
+      let valid = true;
+
+      if (!nombre) {
+        document.getElementById('error-nombre').textContent = 'Por favor introduce tu nombre.';
+        nombreInput.closest('.auth-input-wrap').classList.add('input-error');
+        valid = false;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('error-email').textContent = 'Introduce un correo electrónico válido.';
+        emailInput.closest('.auth-input-wrap').classList.add('input-error');
+        valid = false;
       }
       if (password.length < 8) {
-        alert('La contraseña debe tener al menos 8 caracteres.');
-        return;
+        document.getElementById('error-password').textContent = 'La contraseña debe tener al menos 8 caracteres.';
+        passwordInput.closest('.auth-input-wrap').classList.add('input-error');
+        valid = false;
       }
+      if (!valid) return;
+
       localStorage.setItem('user_nombre',   nombre);
       localStorage.setItem('user_email',    email);
       localStorage.setItem('user_password', password);

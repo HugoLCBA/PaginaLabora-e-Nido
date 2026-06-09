@@ -44,6 +44,7 @@
             <span class="auth-input-icon">✉️</span>
             <input type="email" id="email" placeholder="tu@email.com" />
           </div>
+          <span class="recuperar-error" id="error-email"></span>
         </div>
 
         <div class="auth-field">
@@ -53,12 +54,14 @@
             <input type="password" id="password" placeholder="Tu contraseña" />
             <button class="auth-input-toggle" onclick="togglePassword(this)" type="button">👁</button>
           </div>
+          <span class="recuperar-error" id="error-password"></span>
         </div>
 
         <div class="text-end mb-4">
           <a href="recuperar.html" class="forgot-link">¿Olvidaste tu contraseña?</a>
         </div>
 
+        <span class="recuperar-error mb-3" id="error-general"></span>
         <button onclick="iniciarSesion()" class="btn btn-teal btn-xl w-100">Iniciar Sesión →</button>
 
         <p class="auth-footer mt-4">
@@ -70,33 +73,64 @@
   </div>
 
   <script>
+    // Redirigir si ya está logueado
+    if (localStorage.getItem('user_loggedin') === 'true') {
+      window.location.href = '../index.html';
+    }
+
+    const temaGuardado = localStorage.getItem('user_tema') || 'light';
+    if (temaGuardado === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+
     function togglePassword(btn) {
       const input = btn.closest('.auth-input-wrap').querySelector('input');
       input.type = input.type === 'password' ? 'text' : 'password';
       btn.textContent = input.type === 'password' ? '👁' : '🙈';
     }
 
-    function iniciarSesion() {
-      const email    = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
+    function mostrarError(id, msg) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = msg;
+    }
 
-      if (!email || !password) {
-        alert('Introduce tu correo electrónico y contraseña.');
-        return;
+    function limpiarErrores() {
+      ['error-email','error-password','error-general'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = '';
+      });
+      document.querySelectorAll('.auth-input-wrap').forEach(el => el.classList.remove('input-error'));
+    }
+
+    function iniciarSesion() {
+      limpiarErrores();
+      const emailInput    = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const email         = emailInput.value.trim();
+      const password      = passwordInput.value;
+      let valid = true;
+
+      if (!email) {
+        mostrarError('error-email', 'Introduce tu correo electrónico.');
+        emailInput.closest('.auth-input-wrap').classList.add('input-error');
+        valid = false;
       }
+      if (!password) {
+        mostrarError('error-password', 'Introduce tu contraseña.');
+        passwordInput.closest('.auth-input-wrap').classList.add('input-error');
+        valid = false;
+      }
+      if (!valid) return;
 
       const savedEmail    = localStorage.getItem('user_email');
       const savedPassword = localStorage.getItem('user_password');
 
-      // Si no hay cuenta registrada
       if (!savedEmail || !savedPassword) {
-        alert('No existe ninguna cuenta registrada. Crea una cuenta primero.');
+        mostrarError('error-general', 'No existe ninguna cuenta registrada. Crea una cuenta primero.');
         return;
       }
-
-      // Comprobamos email y contraseña
       if (email !== savedEmail || password !== savedPassword) {
-        alert('El correo electrónico o la contraseña no son correctos.');
+        mostrarError('error-general', 'El correo electrónico o la contraseña no son correctos.');
+        emailInput.closest('.auth-input-wrap').classList.add('input-error');
+        passwordInput.closest('.auth-input-wrap').classList.add('input-error');
         return;
       }
 
